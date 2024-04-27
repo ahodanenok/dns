@@ -8,9 +8,11 @@ import java.io.PushbackInputStream;
 public class MasterFileDataReader {
 
     private final PushbackInputStream in;
+    private String lineSeparator;
 
     public MasterFileDataReader(InputStream in) {
-        this.in = new PushbackInputStream(in);
+        this.lineSeparator = System.lineSeparator();
+        this.in = new PushbackInputStream(in, this.lineSeparator.length());
     }
 
     public String readString() throws IOException {
@@ -24,7 +26,7 @@ public class MasterFileDataReader {
                     "Only ASCII characters are supported, got '0x%x'", ch));
             }
 
-            if (CharacterUtils.isBlank(ch)) {
+            if (CharacterUtils.isBlank(ch) || isLineSeparatorAhead(ch)) {
                 break;
             }
 
@@ -34,7 +36,7 @@ public class MasterFileDataReader {
         if (buf.length() == 0 && ch == -1) {
             throw new EOFException();
         } else if (buf.length() == 0) {
-            throw new IOException("Couldn't read a string for an unknown reason, possibly a bug");
+            throw new NoValueReadException("No string to read");
         }
 
         if (ch != -1) {
@@ -46,9 +48,38 @@ public class MasterFileDataReader {
 
     private void skipBlanks() throws IOException {
         int ch;
-        while ((ch = in.read()) != -1 && CharacterUtils.isBlank(ch));
+        while ((ch = in.read()) != -1) {
+            if (!CharacterUtils.isBlank(ch) || isLineSeparatorAhead(ch)) {
+                break;
+            }
+        }
+
         if (ch != -1) {
             in.unread(ch);
         }
+    }
+
+    private boolean isLineSeparatorAhead(int ch) throws IOException {
+        if (lineSeparator.length() == 1 && lineSeparator.charAt(0) == (char) ch) {
+            return true;
+        }
+
+        if (lineSeparator.length() == 2) {
+            if (lineSeparator.charAt(0) != ch) {
+                return false;
+            }
+
+            int nextCh = in.read();
+            if (nextCh == -1) {
+                return false;
+            }
+            in.unread(nextCh);
+
+            return lineSeparator.charAt(1) == (char) nextCh;
+        }
+
+        throw new IllegalStateException(String.format(
+            "Hmmmm, line separator is more than two characters '%s'",
+            java.util.Arrays.toString(lineSeparator.getBytes("UTF-8"))));
     }
 }

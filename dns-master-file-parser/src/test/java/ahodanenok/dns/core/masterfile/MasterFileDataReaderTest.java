@@ -70,4 +70,20 @@ public class MasterFileDataReaderTest {
         assertEquals("System", reader.readString());
         assertThrows(EOFException.class, () -> reader.readString());
     }
+
+    @Test
+    public void testReadUnquotedStringUntilNewLine() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format("mars%n").getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("mars", reader.readString());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringDontMoveToNextLine() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format("first%nsecond").getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("first", reader.readString());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+    }
 }
