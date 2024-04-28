@@ -16,7 +16,7 @@ public class MasterFileDataReader {
     }
 
     public String readString() throws IOException {
-        skipBlanks();
+        skipNonReadable();
 
         int ch;
         StringBuilder buf = new StringBuilder();
@@ -26,7 +26,7 @@ public class MasterFileDataReader {
                     "Only ASCII characters are supported, got '0x%x'", ch));
             }
 
-            if (CharacterUtils.isBlank(ch) || isLineSeparatorAhead(ch)) {
+            if (CharacterUtils.isBlank(ch) || ch == ';' || isLineSeparatorAhead(ch)) {
                 break;
             }
 
@@ -46,12 +46,40 @@ public class MasterFileDataReader {
         return buf.toString();
     }
 
+    private void skipNonReadable() throws IOException {
+        skipBlanks();
+        skipComment();
+    }
+
     private void skipBlanks() throws IOException {
         int ch;
         while ((ch = in.read()) != -1) {
             if (!CharacterUtils.isBlank(ch) || isLineSeparatorAhead(ch)) {
                 break;
             }
+        }
+
+        if (ch != -1) {
+            in.unread(ch);
+        }
+    }
+
+    private void skipComment() throws IOException {
+        int ch = in.read();
+        if (ch != ';') {
+            if (ch != -1) {
+                in.unread(ch);
+            }
+
+            return;
+        }
+
+        while (ch != -1) {
+            if (isLineSeparatorAhead(ch)) {
+                break;
+            }
+
+            ch = in.read();
         }
 
         if (ch != -1) {

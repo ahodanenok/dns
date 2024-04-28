@@ -86,4 +86,20 @@ public class MasterFileDataReaderTest {
         assertEquals("first", reader.readString());
         assertThrows(NoValueReadException.class, () -> reader.readString());
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "; nothing here", " ; nothing here", "\t; nothing here" })
+    public void testReadEmptyStringWithComment(String str) throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(str.getBytes(StandardCharsets.US_ASCII)));
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringIgnoreComment() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("hello;world".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("hello", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
 }
