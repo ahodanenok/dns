@@ -5,6 +5,9 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.PushbackInputStream;
 
+// todo: implement reading quoted strings
+// todo: implement \ddd escapes
+// todo: add support for (...)
 public class MasterFileDataReader {
 
     private static final char COMMENT_CHAR = ';';
