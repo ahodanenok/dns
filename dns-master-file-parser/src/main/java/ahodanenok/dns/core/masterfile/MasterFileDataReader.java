@@ -7,6 +7,7 @@ import java.io.PushbackInputStream;
 
 public class MasterFileDataReader {
 
+    private static final char COMMENT_CHAR = ';';
     private static final char ESCAPE_SEQUENCE_CHAR = '\\';
 
     private final PushbackInputStream in;
@@ -33,7 +34,7 @@ public class MasterFileDataReader {
                 continue;
             }
 
-            if (CharacterUtils.isBlank(ch) || ch == ';' || isLineSeparatorAhead(ch)) {
+            if (CharacterUtils.isBlank(ch) || ch == COMMENT_CHAR || isLineSeparatorAhead(ch)) {
                 break;
             }
 
@@ -107,7 +108,7 @@ public class MasterFileDataReader {
 
     private void skipComment() throws IOException {
         int ch = in.read();
-        if (ch != ';') {
+        if (ch != COMMENT_CHAR) {
             if (ch != -1) {
                 in.unread(ch);
             }
