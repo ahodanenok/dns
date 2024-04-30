@@ -7,6 +7,8 @@ import java.io.PushbackInputStream;
 
 public class MasterFileDataReader {
 
+    private static final char ESCAPE_SEQUENCE_CHAR = '\\';
+
     private final PushbackInputStream in;
     private String lineSeparator;
 
@@ -24,6 +26,11 @@ public class MasterFileDataReader {
             if (!CharacterUtils.isAscii(ch)) {
                 throw new BadEncodingException(String.format(
                     "Only ASCII characters are supported, got '0x%x'", ch));
+            }
+
+            if (ch == '\\') {
+                readEscapeBodyTo(buf);
+                continue;
             }
 
             if (CharacterUtils.isBlank(ch) || ch == ';' || isLineSeparatorAhead(ch)) {
@@ -46,6 +53,35 @@ public class MasterFileDataReader {
         return buf.toString();
     }
 
+    private void readEscapeBodyTo(StringBuilder buf) throws IOException {
+        int ch = in.read();
+        if (ch == -1) {
+            throw new EOFException();
+        }
+
+        if (!CharacterUtils.isDigit(ch)) {
+            if (isLineSeparatorAhead(ch)) {
+                if (lineSeparator.length() == 2) {
+                    in.read();
+                }
+
+                if (buf != null) {
+                    buf.append(lineSeparator);
+                }
+
+                return;
+            }
+
+            if (buf != null) {
+                buf.append((char) ch);
+            }
+
+            return;
+        }
+
+        throw new UnsupportedEscapeSequenceException(String.format("%c%c", ESCAPE_SEQUENCE_CHAR, ch));
+    }
+
     private void skipNonReadable() throws IOException {
         skipBlanks();
         skipComment();
@@ -54,6 +90,11 @@ public class MasterFileDataReader {
     private void skipBlanks() throws IOException {
         int ch;
         while ((ch = in.read()) != -1) {
+            if (ch == ESCAPE_SEQUENCE_CHAR) {
+                readEscapeBodyTo(null);
+                continue;
+            }
+
             if (!CharacterUtils.isBlank(ch) || isLineSeparatorAhead(ch)) {
                 break;
             }
@@ -75,7 +116,9 @@ public class MasterFileDataReader {
         }
 
         while (ch != -1) {
-            if (isLineSeparatorAhead(ch)) {
+            if (ch == ESCAPE_SEQUENCE_CHAR) {
+                readEscapeBodyTo(null);
+            } else if (isLineSeparatorAhead(ch)) {
                 break;
             }
 

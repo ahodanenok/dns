@@ -102,4 +102,45 @@ public class MasterFileDataReaderTest {
         assertEquals("hello", reader.readString());
         assertThrows(EOFException.class, () -> reader.readString());
     }
+
+    @Test
+    public void testReadCommentIgnoreEscapedLineSeparator() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format("special ;encodings\\%nare necessary").getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("special", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringWithEscapedComment() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("definitions\\;expected;to occur".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("definitions;expected", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringWithEscapedBlanks() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("domain\\\tname\\ system".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("domain\tname system", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringWithLineSeparator() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format("name\\%nserver").getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(String.format("name%nserver"), reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringWithUnsupportedEscapeSequence() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format("ab\\3cd").getBytes(StandardCharsets.US_ASCII)));
+        UnsupportedEscapeSequenceException e =
+            assertThrows(UnsupportedEscapeSequenceException.class, () -> reader.readString());
+        assertEquals("\\3", e.getMessage());
+    }
 }
