@@ -143,4 +143,41 @@ public class MasterFileDataReaderTest {
             assertThrows(UnsupportedEscapeSequenceException.class, () -> reader.readString());
         assertEquals("\\3", e.getMessage());
     }
+
+    @Test
+    public void testAdvanceNoData() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(new ByteArrayInputStream(new byte[0]));
+        assertDoesNotThrow(() -> reader.advance());
+        assertDoesNotThrow(() -> reader.advance());
+        assertDoesNotThrow(() -> reader.advance());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "cname", "%ncname", ";address%ncname", " \tcname", "%n \t%n%ncname"})
+    public void testAdvanceReadUnquotedString(String str) throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format(str).getBytes(StandardCharsets.US_ASCII)));
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("cname", reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "decimal integer", "%ndecimal integer", "decimal%ninteger", "%ndecimal%ninteger",
+        ";positive%ndecimal;hex%ninteger", " %n\t%n  %n%ndecimal %n  %n\t\t\t%n%ninteger",
+        "decimal integer%n%n"
+    })
+    public void testAdvanceReadUnquotedStringMutliple(String str) throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format(str).getBytes(StandardCharsets.US_ASCII)));
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("decimal", reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("integer", reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
 }

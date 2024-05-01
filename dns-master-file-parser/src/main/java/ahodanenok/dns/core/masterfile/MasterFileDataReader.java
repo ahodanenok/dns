@@ -21,6 +21,26 @@ public class MasterFileDataReader {
         this.in = new PushbackInputStream(in, this.lineSeparator.length());
     }
 
+    public void advance() throws IOException {
+        int ch;
+        while (true) {
+            skipNonReadable();
+
+            ch = in.read();
+            if (!isLineSeparatorAhead(ch)) {
+                break;
+            }
+
+            if (lineSeparator.length() == 2) {
+                in.read();
+            }
+        }
+
+        if (ch != -1) {
+            in.unread(ch);
+        }
+    }
+
     public String readString() throws IOException {
         skipNonReadable();
 
@@ -64,18 +84,6 @@ public class MasterFileDataReader {
         }
 
         if (!CharacterUtils.isDigit(ch)) {
-            if (isLineSeparatorAhead(ch)) {
-                if (lineSeparator.length() == 2) {
-                    in.read();
-                }
-
-                if (buf != null) {
-                    buf.append(lineSeparator);
-                }
-
-                return;
-            }
-
             if (buf != null) {
                 buf.append((char) ch);
             }
