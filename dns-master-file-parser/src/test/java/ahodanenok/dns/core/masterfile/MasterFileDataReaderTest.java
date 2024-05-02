@@ -180,4 +180,33 @@ public class MasterFileDataReaderTest {
         assertDoesNotThrow(() -> reader.advance());
         assertThrows(EOFException.class, () -> reader.readString());
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = { ";domain", " \t", "" })
+    public void testPeekNoData(String str) throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format(str).getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(MasterFileDataReader.EOF_MARKER, reader.peek());
+        assertEquals(MasterFileDataReader.EOF_MARKER, reader.peek());
+        assertEquals(MasterFileDataReader.EOF_MARKER, reader.peek());
+    }
+
+    @Test
+    public void testPeek() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("\t record".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals('r', reader.peek());
+        assertEquals('r', reader.peek());
+        assertEquals('r', reader.peek());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "%ndomain", " \t%ndomain" })
+    public void testPeekEOL(String str) throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format(str).getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+    }
 }

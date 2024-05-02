@@ -10,6 +10,9 @@ import java.io.PushbackInputStream;
 // todo: add support for (...)
 public class MasterFileDataReader {
 
+    public static final int EOF_MARKER = -1;
+    public static final int EOL_MARKER = -2;
+
     private static final char COMMENT_CHAR = ';';
     private static final char ESCAPE_SEQUENCE_CHAR = '\\';
 
@@ -41,10 +44,28 @@ public class MasterFileDataReader {
         }
     }
 
+    public int peek() throws IOException {
+        skipNonReadable();
+
+        int ch = in.read();
+        if (ch == -1) {
+            return EOF_MARKER;
+        }
+
+        if (isLineSeparatorAhead(ch)) {
+            in.unread(ch);
+            return EOL_MARKER;
+        }
+
+        in.unread(ch);
+        return ch;
+    }
+
     public String readString() throws IOException {
         skipNonReadable();
 
         int ch;
+        // todo: share a buffer between calls?
         StringBuilder buf = new StringBuilder();
         while ((ch = in.read()) != -1) {
             if (!CharacterUtils.isAscii(ch)) {
