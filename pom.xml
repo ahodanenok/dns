@@ -14,5 +14,6 @@
 
   <modules>
     <module>dns-master-file-parser</module>
+    <module>dns-model</module>
   </modules>
 </project>
