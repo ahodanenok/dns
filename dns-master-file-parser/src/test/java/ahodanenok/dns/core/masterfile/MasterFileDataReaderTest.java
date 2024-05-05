@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MasterFileDataReaderTest {
 
     @Test
-    public void testReadStringNoData() throws IOException {
+    public void testReadStringEOF() throws IOException {
         MasterFileDataReader reader = new MasterFileDataReader(
             new ByteArrayInputStream(new byte[0]));
         assertThrows(EOFException.class, () -> reader.readString());
@@ -27,10 +27,11 @@ public class MasterFileDataReaderTest {
         assertThrows(BadEncodingException.class, () -> reader.readString());
     }
 
-    @Test
-    public void testReadUnquotedString() throws IOException {
+    @ParameterizedTest
+    @ValueSource(strings = { "mercury", "mercury\t", "mercury ", "mercury\t \t "})
+    public void testReadUnquotedString(String str) throws IOException {
         MasterFileDataReader reader = new MasterFileDataReader(
-            new ByteArrayInputStream("mercury".getBytes(StandardCharsets.US_ASCII)));
+            new ByteArrayInputStream(str.getBytes(StandardCharsets.US_ASCII)));
         assertEquals("mercury", reader.readString());
         assertThrows(EOFException.class, () -> reader.readString());
     }
@@ -44,27 +45,10 @@ public class MasterFileDataReaderTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { " venus", "\tvenus", "venus ", "venus\t",  " \t venus\t \t" })
-    public void testReadUnquotedStringSkipBlanks(String str) throws IOException {
+    @ValueSource(strings = { "Domain\tName\tSystem", "Domain \t Name\t \tSystem "})
+    public void testReadMultipleUnquotedStrings(String str) throws IOException {
         MasterFileDataReader reader = new MasterFileDataReader(
             new ByteArrayInputStream(str.getBytes(StandardCharsets.US_ASCII)));
-        assertEquals("venus", reader.readString());
-        assertThrows(EOFException.class, () -> reader.readString());
-    }
-
-    @Test
-    public void testReadMultipleUnquotedStrings() throws IOException {
-        MasterFileDataReader reader = new MasterFileDataReader(
-            new ByteArrayInputStream("hello\tworld".getBytes(StandardCharsets.US_ASCII)));
-        assertEquals("hello", reader.readString());
-        assertEquals("world", reader.readString());
-        assertThrows(EOFException.class, () -> reader.readString());
-    }
-
-    @Test
-    public void testReadMultipleUnquotedStringsSkipBlanks() throws IOException {
-        MasterFileDataReader reader = new MasterFileDataReader(
-            new ByteArrayInputStream("\t Domain \t Name\t\tSystem ".getBytes(StandardCharsets.US_ASCII)));
         assertEquals("Domain", reader.readString());
         assertEquals("Name", reader.readString());
         assertEquals("System", reader.readString());
@@ -154,7 +138,7 @@ public class MasterFileDataReaderTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "cname", "%ncname", ";address%ncname", " \tcname", "%n \t%n%ncname"})
+    @ValueSource(strings = { "cname", "%ncname", ";address%ncname", "%n \t%n%ncname"})
     public void testAdvanceReadUnquotedString(String str) throws IOException {
         MasterFileDataReader reader = new MasterFileDataReader(
             new ByteArrayInputStream(String.format(str).getBytes(StandardCharsets.US_ASCII)));
@@ -183,7 +167,7 @@ public class MasterFileDataReaderTest {
 
     @ParameterizedTest
     @ValueSource(strings = { ";domain", " \t", "" })
-    public void testPeekNoData(String str) throws IOException {
+    public void testPeekEOF(String str) throws IOException {
         MasterFileDataReader reader = new MasterFileDataReader(
             new ByteArrayInputStream(String.format(str).getBytes(StandardCharsets.US_ASCII)));
         assertEquals(MasterFileDataReader.EOF_MARKER, reader.peek());
@@ -192,9 +176,27 @@ public class MasterFileDataReaderTest {
     }
 
     @Test
-    public void testPeek() throws IOException {
+    public void testPeekSpace() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(" \trecord".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(' ', reader.peek());
+        assertEquals(' ', reader.peek());
+        assertEquals(' ', reader.peek());
+    }
+
+    @Test
+    public void testPeekTab() throws IOException {
         MasterFileDataReader reader = new MasterFileDataReader(
             new ByteArrayInputStream("\t record".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals('\t', reader.peek());
+        assertEquals('\t', reader.peek());
+        assertEquals('\t', reader.peek());
+    }
+
+    @Test
+    public void testPeek() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("record".getBytes(StandardCharsets.US_ASCII)));
         assertEquals('r', reader.peek());
         assertEquals('r', reader.peek());
         assertEquals('r', reader.peek());
@@ -208,5 +210,115 @@ public class MasterFileDataReaderTest {
         assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
         assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
         assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+    }
+
+    @Test
+    public void testReadInitialBlank() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(" NS VENERA".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(" ", reader.readString());
+        assertEquals("NS", reader.readString());
+        assertEquals("VENERA", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringWithEscapedSpace() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("\\ mailbox".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(" mailbox", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadUnquotedStringWithEscapedTab() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream("\\\tmailbox".getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("\tmailbox", reader.readString());
+        assertThrows(EOFException.class, () -> reader.readString());
+    }
+
+    @Test
+    public void testReadMultipleLinesWithInitialBlank() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format(
+                "  IN\tA  192.0.2.1 ; IPv4 address%n"
+                + "\t IN  NS dns ; nameserver %n"
+                + " MX a.test.com%n"
+                + "\tMX 200 b.test.com").getBytes(StandardCharsets.US_ASCII)));
+        assertEquals(" ", reader.readString());
+        assertEquals("IN", reader.readString());
+        assertEquals("A", reader.readString());
+        assertEquals("192.0.2.1", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("\t", reader.readString());
+        assertEquals("IN", reader.readString());
+        assertEquals("NS", reader.readString());
+        assertEquals("dns", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals(" ", reader.readString());
+        assertEquals("MX", reader.readString());
+        assertEquals("a.test.com", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("\t", reader.readString());
+        assertEquals("MX", reader.readString());
+        assertEquals("200", reader.readString());
+        assertEquals("b.test.com", reader.readString());
+        assertEquals(MasterFileDataReader.EOF_MARKER, reader.peek());
+        assertThrows(EOFException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+    }
+
+    @Test
+    public void testReadMultipleLines() throws IOException {
+        MasterFileDataReader reader = new MasterFileDataReader(
+            new ByteArrayInputStream(String.format(
+                "test.com.\t\tIN A 127.0.0.1;localhost%n"
+                + "www   IN  CNAME a.com. %n"
+                + "      NS  gw-1.earth%n"
+                + "@ MX\tno-reply%n"
+                + "\tAAAA   0:0:0:0:0:0:0:1 ;localhost").getBytes(StandardCharsets.US_ASCII)));
+        assertEquals("test.com.", reader.readString());
+        assertEquals("IN", reader.readString());
+        assertEquals("A", reader.readString());
+        assertEquals("127.0.0.1", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("www", reader.readString());
+        assertEquals("IN", reader.readString());
+        assertEquals("CNAME", reader.readString());
+        assertEquals("a.com.", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals(" ", reader.readString());
+        assertEquals("NS", reader.readString());
+        assertEquals("gw-1.earth", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("@", reader.readString());
+        assertEquals("MX", reader.readString());
+        assertEquals("no-reply", reader.readString());
+        assertEquals(MasterFileDataReader.EOL_MARKER, reader.peek());
+        assertThrows(NoValueReadException.class, () -> reader.readString());
+        assertDoesNotThrow(() -> reader.advance());
+        assertDoesNotThrow(() -> reader.advance());
+        assertEquals("\t", reader.readString());
+        assertEquals("AAAA", reader.readString());
+        assertEquals("0:0:0:0:0:0:0:1", reader.readString());
+        assertEquals(MasterFileDataReader.EOF_MARKER, reader.peek());
+        assertThrows(EOFException.class, () -> reader.readString());
     }
 }

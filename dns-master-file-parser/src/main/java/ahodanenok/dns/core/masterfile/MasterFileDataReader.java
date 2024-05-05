@@ -18,34 +18,49 @@ public class MasterFileDataReader {
 
     private final PushbackInputStream in;
     private String lineSeparator;
+    private boolean stl; // start of line
+    private String stlBlank;
 
     public MasterFileDataReader(InputStream in) {
         this.lineSeparator = System.lineSeparator();
         this.in = new PushbackInputStream(in, this.lineSeparator.length());
+        this.stl = true;
     }
 
     public void advance() throws IOException {
-        int ch;
+        if (stlBlank != null) {
+            return;
+        }
+
+        int ch = -1;
         while (true) {
             skipNonReadable();
+            if (stlBlank != null) {
+                break;
+            }
 
             ch = in.read();
             if (!isLineSeparatorAhead(ch)) {
+                if (ch != -1) {
+                    in.unread(ch);
+                }
+
                 break;
             }
 
             if (lineSeparator.length() == 2) {
                 in.read();
             }
-        }
 
-        if (ch != -1) {
-            in.unread(ch);
+            stl = true;
         }
     }
 
     public int peek() throws IOException {
         skipNonReadable();
+        if (stlBlank != null) {
+            return stlBlank.charAt(0);
+        }
 
         int ch = in.read();
         if (ch == -1) {
@@ -63,6 +78,11 @@ public class MasterFileDataReader {
 
     public String readString() throws IOException {
         skipNonReadable();
+        if (stlBlank != null) {
+            String str = stlBlank;
+            stlBlank = null;
+            return str;
+        }
 
         int ch;
         // todo: share a buffer between calls?
@@ -85,14 +105,14 @@ public class MasterFileDataReader {
             buf.append((char) ch);
         }
 
+        if (ch != -1) {
+            in.unread(ch);
+        }
+
         if (buf.length() == 0 && ch == -1) {
             throw new EOFException();
         } else if (buf.length() == 0) {
             throw new NoValueReadException("No string to read");
-        }
-
-        if (ch != -1) {
-            in.unread(ch);
         }
 
         return buf.toString();
@@ -121,21 +141,38 @@ public class MasterFileDataReader {
     }
 
     private void skipBlanks() throws IOException {
+        if (stlBlank != null) {
+            return;
+        }
+
         int ch;
+        int blank = -1;
         while ((ch = in.read()) != -1) {
             if (ch == ESCAPE_SEQUENCE_CHAR) {
-                readEscapeBodyTo(null);
-                continue;
+                break;
             }
 
-            if (!CharacterUtils.isBlank(ch) || isLineSeparatorAhead(ch)) {
+            if (isLineSeparatorAhead(ch)) {
                 break;
+            }
+
+            if (!CharacterUtils.isBlank(ch)) {
+                if (blank != -1) {
+                    // if there are only two types of blank characters, use constants?
+                    stlBlank = "" + (char) blank;
+                }
+
+                break;
+            } else if (stl && blank == -1) {
+                blank = ch;
             }
         }
 
         if (ch != -1) {
             in.unread(ch);
         }
+
+        stl = false;
     }
 
     private void skipComment() throws IOException {
@@ -161,6 +198,9 @@ public class MasterFileDataReader {
         if (ch != -1) {
             in.unread(ch);
         }
+
+        stlBlank = null;
+        stl = false;
     }
 
     private boolean isLineSeparatorAhead(int ch) throws IOException {
