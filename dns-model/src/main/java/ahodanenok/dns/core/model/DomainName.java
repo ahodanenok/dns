@@ -16,4 +16,14 @@ public final class DomainName {
     public String toString() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        DomainName other = (DomainName) obj;
+        return value.equals(other.value);
+    }
 }

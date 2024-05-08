@@ -1,0 +1,1 @@
+test-005.cname.		CH 25   CNAME	canonical.test-005.cname.	

@@ -1,0 +1,5 @@
+test-006-1.cname.		CH	 1200   CNAME	canonical.test-006-1.cname.  
+test-006-2.cname.		720000   CNAME	canonical.test-006-2.cname.	
+test-006-3.cname.		CS    CNAME	canonical.test-006-3.cname.
+test-006-4.cname.		245  HS   CNAME	canonical.test-006-4.cname.	; check comment
+test-006-5.cname.  CNAME 	canonical.test-006-5.cname.	

@@ -1,0 +1,1 @@
+test-003.cname.		CNAME	canonical.test-003.cname.	

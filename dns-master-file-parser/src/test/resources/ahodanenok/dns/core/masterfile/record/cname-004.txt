@@ -1,0 +1,1 @@
+test-004.cname.		50000   CNAME	canonical.test-004.cname.	

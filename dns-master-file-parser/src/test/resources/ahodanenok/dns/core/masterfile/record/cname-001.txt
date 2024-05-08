@@ -1,0 +1,1 @@
+test-001.cname.	3600		IN    CNAME    canonical.test-001.cname. ; cname here

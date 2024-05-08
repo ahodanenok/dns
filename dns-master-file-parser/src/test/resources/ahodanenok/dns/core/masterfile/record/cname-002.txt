@@ -1,0 +1,1 @@
+test-002.cname.	IN    CNAME    canonical.test-002.cname.

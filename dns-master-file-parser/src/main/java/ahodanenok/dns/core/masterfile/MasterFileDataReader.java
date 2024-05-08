@@ -1,5 +1,6 @@
 package ahodanenok.dns.core.masterfile;
 
+import java.io.Closeable;
 import java.io.InputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.io.PushbackInputStream;
 // todo: implement reading quoted strings
 // todo: implement \ddd escapes
 // todo: add support for (...)
-public class MasterFileDataReader {
+public class MasterFileDataReader implements Closeable {
 
     public static final int EOF_MARKER = -1;
     public static final int EOL_MARKER = -2;
@@ -225,5 +226,9 @@ public class MasterFileDataReader {
         throw new IllegalStateException(String.format(
             "Hmmmm, line separator is more than two characters '%s'",
             java.util.Arrays.toString(lineSeparator.getBytes("UTF-8"))));
+    }
+
+    public void close() throws IOException {
+        in.close();
     }
 }
