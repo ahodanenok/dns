@@ -1,0 +1,5 @@
+test-006-1.		 1200   NS	ns.test-006-1.  
+test-006-2.		CS    NS	ns.test-006-2. ; check comment
+test-006-3.		720000   NS	ns.test-006-3.	 
+test-006-4.  HS NS 	ns.test-006-4.	
+test-006-5.		245    NS	ns.test-006-5.	
