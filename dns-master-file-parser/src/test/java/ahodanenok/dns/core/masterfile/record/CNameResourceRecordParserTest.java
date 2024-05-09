@@ -13,7 +13,7 @@ import ahodanenok.dns.core.model.ResourceRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CNameRecordParserTest {
+public class CNameResourceRecordParserTest {
 
     @Test
     @DisplayName("Parse CNAME record: <domain-name> <TTL> <class> <type> <RDATA>")

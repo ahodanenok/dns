@@ -13,7 +13,7 @@ import ahodanenok.dns.core.model.ResourceRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NSRecordParserTest {
+public class NSResourceRecordParserTest {
 
     @Test
     @DisplayName("Parse NS record: <domain-name> <TTL> <class> <type> <RDATA>")
