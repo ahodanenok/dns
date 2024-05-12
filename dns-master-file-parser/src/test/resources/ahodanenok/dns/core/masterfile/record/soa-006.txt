@@ -1,0 +1,5 @@
+a.soa.test-006.	    25232125	    SOA    a.mname-006.test.    a.rname-006.test.  32312552   2356  112   66  234556     
+b.soa.test-006.	IN    	    SOA    b.mname-006.test.    b.rname-006.test.  3423512   123  6612356   2312  5521     
+c.soa.test-006.	    51234	    SOA    c.mname-006.test.    c.rname-006.test.  5531   664  1251678   22134  221     
+d.soa.test-006.	CS    	    SOA    d.mname-006.test.    d.rname-006.test.  332122   3357  11   38852  151256     
+e.soa.test-006.	HS    111	    SOA    e.mname-006.test.    e.rname-006.test.  678   112467  123   66432  8799     

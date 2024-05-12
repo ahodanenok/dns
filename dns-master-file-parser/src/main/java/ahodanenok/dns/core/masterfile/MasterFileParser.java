@@ -94,7 +94,7 @@ public final class MasterFileParser {
 
         str = reader.readString();
         if (CharacterUtils.isDigit(str.charAt(0))) {
-            ttl = parseTtl(str);
+            ttl = ParseUtils.parseInt(str);
             str = reader.readString();
             if (recordClasses.contains(str)) {
                 rclass = str;
@@ -112,7 +112,7 @@ public final class MasterFileParser {
             rclass = str;
             str = reader.readString();
             if (CharacterUtils.isDigit(str.charAt(0))) {
-                ttl = parseTtl(str);
+                ttl = ParseUtils.parseInt(str);
                 str = reader.readString();
                 if (!recordParsers.containsKey(str)) {
                     throw new MasterFileParseException("todo");
@@ -159,10 +159,6 @@ public final class MasterFileParser {
         recordParser.parseRData(reader, record);
 
         return record;
-    }
-
-    private int parseTtl(String str) {
-        return Integer.parseInt(str);
     }
 
     private static class ParseContext {

@@ -1,0 +1,1 @@
+soa.test-003.		    SOA    mname-003.test.    rname-003.test.  555666777   234  3700 654321  5223     

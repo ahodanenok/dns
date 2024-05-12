@@ -1,0 +1,1 @@
+soa.test-004.	100	    SOA    mname-004.test.    rname-004.test.  1   66  890   345677  67000     

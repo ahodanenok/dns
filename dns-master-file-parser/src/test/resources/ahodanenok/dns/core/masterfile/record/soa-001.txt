@@ -1,0 +1,1 @@
+soa.test-001.	72000		IN    SOA    mname-001.test. rname-001.test.  2024033101   1800  900 604800  86400

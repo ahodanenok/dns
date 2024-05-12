@@ -1,0 +1,1 @@
+soa.test-002.		HS    SOA    mname-002.test. rname-002.test.  1022030402   60  300 5002001  32123;523
