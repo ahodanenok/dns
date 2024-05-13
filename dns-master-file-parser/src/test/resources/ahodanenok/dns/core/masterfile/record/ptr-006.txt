@@ -1,0 +1,5 @@
+10.IN-ADDR.ARPA.	IN            PTR    ptr.test-006-1.
+20.IN-ADDR.ARPA.	    36000	  PTR    ptr.test-006-2.
+30.IN-ADDR.ARPA.			      PTR    ptr.test-006-3.;abc
+40.IN-ADDR.ARPA.	CS  5450	  PTR    ptr.test-006-4.
+50.IN-ADDR.ARPA.		32	      PTR    ptr.test-006-5.

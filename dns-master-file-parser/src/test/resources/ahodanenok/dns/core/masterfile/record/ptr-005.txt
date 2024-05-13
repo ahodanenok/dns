@@ -1,0 +1,1 @@
+10.20.IN-ADDR.ARPA.	 IN  678		    PTR    ptr.test-005.

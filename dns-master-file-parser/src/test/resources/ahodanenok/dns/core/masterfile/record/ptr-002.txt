@@ -1,0 +1,1 @@
+10.IN-ADDR.ARPA.			HS    PTR    ptr.test-002.

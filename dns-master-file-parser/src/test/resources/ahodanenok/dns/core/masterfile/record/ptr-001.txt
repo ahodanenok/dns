@@ -1,0 +1,1 @@
+22.0.2.10.IN-ADDR.ARPA.	3600		IN    PTR    ptr.test-001.
