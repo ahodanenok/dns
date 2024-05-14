@@ -13,7 +13,7 @@
   </properties>
 
   <modules>
-    <module>dns-master-file-parser</module>
+    <module>dns-masterfile</module>
     <module>dns-model</module>
   </modules>
 </project>

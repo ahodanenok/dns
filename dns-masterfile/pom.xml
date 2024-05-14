@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>ahodanenok.dns</groupId>
-    <artifactId>dns-master-file-parser</artifactId>
+    <artifactId>dns-masterfile</artifactId>
 
     <dependencies>
         <dependency>
