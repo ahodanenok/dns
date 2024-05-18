@@ -8,9 +8,17 @@ import ahodanenok.dns.core.model.ResourceRecord;
 
 public abstract class ZoneSupplier implements Supplier<Zone> {
 
-    private final ZoneValidator validator;
+    private ZoneValidator validator;
+
+    public ZoneSupplier() {
+        this(DummyZoneValidator.INSTANCE);
+    }
 
     public ZoneSupplier(ZoneValidator validator) {
+        this.validator = validator;
+    }
+
+    public void setValidator(ZoneValidator validator) {
         this.validator = validator;
     }
 
@@ -31,5 +39,5 @@ public abstract class ZoneSupplier implements Supplier<Zone> {
         return new Zone(records);
     }
 
-    public abstract Iterable<ResourceRecord> getIterable();
+    protected abstract Iterable<ResourceRecord> getIterable();
 }

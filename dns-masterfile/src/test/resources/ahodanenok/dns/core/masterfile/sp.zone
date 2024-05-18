@@ -1,0 +1,7 @@
+abc.local.      IN  3600    SOA ns.test.local. resp.test.local. 100 1800 60 600 100
+
+a.abc.local.      IN  200    NS  a.ns.abc.local.
+b.abc.local.      IN  300    NS  b.ns.abc.local.
+c.abc.local.      IN  400    NS  c.ns.abc.local.
+
+d.abc.local.    IN  86400   CNAME   e.abc.local.

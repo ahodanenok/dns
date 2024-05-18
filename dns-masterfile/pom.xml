@@ -17,6 +17,11 @@
             <artifactId>dns-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ahodanenok.dns</groupId>
+            <artifactId>dns-zone</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

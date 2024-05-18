@@ -6,6 +6,8 @@ import ahodanenok.dns.core.model.ResourceRecord;
 
 public final class DummyZoneValidator implements ZoneValidator {
 
+    public static final DummyZoneValidator INSTANCE = new DummyZoneValidator();
+
     @Override
     public void validateNext(ResourceRecord record) {
         /* no-op */
