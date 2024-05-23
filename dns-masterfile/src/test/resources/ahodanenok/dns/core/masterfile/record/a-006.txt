@@ -1,0 +1,5 @@
+test-006-1.address.		CS	 5231   A	11.234.2.55  ; check comment
+test-006-2.address.		720000   A	8.25.4.89	
+test-006-3.address.		HS    A	192.168.5.100; check comment
+test-006-4.address.		3246  HS   A	127.0.0.1	
+test-006-5.address.  A 	201.22.34.112	
