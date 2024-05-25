@@ -1,0 +1,1 @@
+test-001.hinfo. 	4800		IN    HINFO    DEC-KS10  UNIX;WIN32

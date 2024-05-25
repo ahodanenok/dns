@@ -1,0 +1,1 @@
+test-002.hinfo. 			CS    HINFO    IBM-4381  WIN32  

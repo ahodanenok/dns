@@ -1,0 +1,1 @@
+test-005.hinfo. 	IN		9    HINFO   TRS-80  SUN     

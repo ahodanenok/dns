@@ -1,0 +1,5 @@
+test-006-1.hinfo. 	            HINFO   ZENITH-148  TENEX     
+test-006-2.hinfo. 	CS          HINFO   VAX  NEXUS  
+test-006-3.hinfo. 	   3452     HINFO   PLI  FUZZ  
+test-006-4.hinfo. 	IN 111111   HINFO   IMAGEN-8/300  AMIGA-OS-3.1;OS 
+test-006-5.hinfo. 	6534 CH     HINFO   HONEYWELL-DPS-6  CHRYSALIS  

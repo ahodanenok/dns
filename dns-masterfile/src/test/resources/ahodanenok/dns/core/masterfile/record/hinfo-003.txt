@@ -1,0 +1,1 @@
+test-003.hinfo. 			    HINFO    HP3000  XDE  
