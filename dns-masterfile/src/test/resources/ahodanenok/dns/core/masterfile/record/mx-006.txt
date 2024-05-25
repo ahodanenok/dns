@@ -1,0 +1,5 @@
+test-006-1.email.	    	    CH    MX      300     exch-1.test.  ;data.
+test-006-2.email.	   532124 	    IN      MX      1       exch-2.test.
+test-006-3.email.	    	                MX      25234   exch-3.test.;abc
+test-006-4.email.	    	    CS   720    MX      344     exch-4.test.
+test-006-5.email.	    	                MX      62      exch-5.test.

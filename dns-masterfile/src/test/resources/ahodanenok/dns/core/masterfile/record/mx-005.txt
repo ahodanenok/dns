@@ -1,0 +1,1 @@
+test-005.email.	    	    IN   300000 MX 5    srv.test.;data.
