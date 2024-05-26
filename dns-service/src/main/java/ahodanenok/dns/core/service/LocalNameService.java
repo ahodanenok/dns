@@ -6,6 +6,7 @@ import java.util.List;
 import ahodanenok.dns.core.model.CNameResourceRecord;
 import ahodanenok.dns.core.model.DomainName;
 import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.model.NSResourceRecord;
 import ahodanenok.dns.core.model.query.Query;
 import ahodanenok.dns.core.model.query.QueryResponse;
 import ahodanenok.dns.core.model.query.Question;
@@ -27,10 +28,17 @@ public final class LocalNameService implements NameService {
         Question question = query.getQuestion();
         DomainName qname = question.getQName();
         List<ResourceRecord> answer = new ArrayList<>();
+        List<ResourceRecord> authority = new ArrayList<>();
+        List<ResourceRecord> additional = new ArrayList<>();
 
         while (true) {
             Node node = storage.findNearestNode(qname, question.getQClass());
+            if (node == null) {
+                // todo: not found
+            }
+
             if (qname.equals(node.getName())) {
+                // todo: authoritative
                 CNameResourceRecord cnameRecord = node.getRecords().stream()
                     .filter(r -> r.getType().equals("CNAME"))
                     .findFirst()
@@ -47,15 +55,42 @@ public final class LocalNameService implements NameService {
                     }
                     break;
                 }
-            } else {
-                // todo: ns
+            } else if (node.isLeaf()) {
+                for (ResourceRecord record : node.getRecords()) {
+                    if (record.getType().equals("NS")) {
+                        authority.add((NSResourceRecord) record);
+                    }
+                }
+
+                if (!authority.isEmpty()) {
+                    // todo: non-authoritative
+                    for (ResourceRecord record : authority) {
+                        NSResourceRecord nsRecord = (NSResourceRecord) record;
+                        Node glueNode = storage.findNodeExact(nsRecord.getNSName(), nsRecord.getRClass());
+                        if (glueNode == null) {
+                            // todo: what to do?
+                            continue;
+                        }
+
+                        for (ResourceRecord glueRecord : glueNode.getRecords()) {
+                            if (glueRecord.getType().equals("A")) {
+                                additional.add(glueRecord);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+
                 // todo: not found
+                break;
+            } else {
                 break;
             }
         }
 
         // todo: what additional records to add?
 
-        return new QueryResponse(answer, List.of(), List.of());
+        return new QueryResponse(answer, authority, additional);
     }
 }
