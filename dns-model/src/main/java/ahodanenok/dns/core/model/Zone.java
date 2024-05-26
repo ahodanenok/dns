@@ -1,11 +1,7 @@
-package ahodanenok.dns.core.zone;
+package ahodanenok.dns.core.model;
 
 import java.util.Collections;
 import java.util.List;
-
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.ResourceRecord;
-import ahodanenok.dns.core.model.SOAResourceRecord;
 
 public final class Zone {
 
@@ -23,6 +19,10 @@ public final class Zone {
 
     public DomainName getName() {
         return soaRecord.getName();
+    }
+
+    public long getSerial() {
+        return soaRecord.getSerial();
     }
 
     public List<ResourceRecord> getRecords() {

@@ -7,7 +7,7 @@ import ahodanenok.dns.core.masterfile.record.NSResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.SOAResourceRecordParser;
 import ahodanenok.dns.core.model.DomainName;
 import ahodanenok.dns.core.model.ResourceRecord;
-import ahodanenok.dns.core.zone.Zone;
+import ahodanenok.dns.core.model.Zone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

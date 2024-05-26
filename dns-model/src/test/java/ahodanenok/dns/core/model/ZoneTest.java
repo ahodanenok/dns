@@ -1,13 +1,8 @@
-package ahodanenok.dns.core.zone;
+package ahodanenok.dns.core.model;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.CNameResourceRecord;
-import ahodanenok.dns.core.model.NSResourceRecord;
-import ahodanenok.dns.core.model.SOAResourceRecord;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;

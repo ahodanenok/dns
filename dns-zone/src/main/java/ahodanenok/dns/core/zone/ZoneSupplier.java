@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.model.Zone;
 
 public abstract class ZoneSupplier implements Supplier<Zone> {
 

@@ -9,6 +9,7 @@ import ahodanenok.dns.core.model.DomainName;
 import ahodanenok.dns.core.model.NSResourceRecord;
 import ahodanenok.dns.core.model.ResourceRecord;
 import ahodanenok.dns.core.model.SOAResourceRecord;
+import ahodanenok.dns.core.model.Zone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
