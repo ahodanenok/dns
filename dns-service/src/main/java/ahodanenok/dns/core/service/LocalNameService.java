@@ -55,7 +55,7 @@ public final class LocalNameService implements NameService {
                     }
                     break;
                 }
-            } else if (node.isLeaf()) {
+            } else {
                 for (ResourceRecord record : node.getRecords()) {
                     if (record.getType().equals("NS")) {
                         authority.add((NSResourceRecord) record);
@@ -83,8 +83,6 @@ public final class LocalNameService implements NameService {
                 }
 
                 // todo: not found
-                break;
-            } else {
                 break;
             }
         }

@@ -31,7 +31,7 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("db.cluster."), "IN")).thenReturn(
-            new Node(DomainName.of("db.cluster."), false, List.of(r1, r2, r3)));
+            new Node(DomainName.of("db.cluster."), List.of(r1, r2, r3)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
@@ -52,7 +52,7 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("user.mailbox."), "CS")).thenReturn(
-            new Node(DomainName.of("user.mailbox."), false, List.of(r1, r2, r3, r4, r5, r6, r7)));
+            new Node(DomainName.of("user.mailbox."), List.of(r1, r2, r3, r4, r5, r6, r7)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
@@ -70,7 +70,7 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("hello."), "IN")).thenReturn(
-            new Node(DomainName.of("hello."), false, List.of(r1)));
+            new Node(DomainName.of("hello."), List.of(r1)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
@@ -88,9 +88,9 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("images."), "IN")).thenReturn(
-            new Node(DomainName.of("images."), false, List.of(r1)));
+            new Node(DomainName.of("images."), List.of(r1)));
         when(storage.findNearestNode(DomainName.of("static.data."), "IN")).thenReturn(
-            new Node(DomainName.of("static.data."), false, List.of(r2, r3)));
+            new Node(DomainName.of("static.data."), List.of(r2, r3)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
@@ -117,17 +117,17 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("initial."), "IN")).thenReturn(
-            new Node(DomainName.of("initial."), false, List.of(r1)));
+            new Node(DomainName.of("initial."), List.of(r1)));
         when(storage.findNearestNode(DomainName.of("one."), "IN")).thenReturn(
-            new Node(DomainName.of("one."), false, List.of(r2)));
+            new Node(DomainName.of("one."), List.of(r2)));
         when(storage.findNearestNode(DomainName.of("two."), "IN")).thenReturn(
-            new Node(DomainName.of("two."), false, List.of(r3)));
+            new Node(DomainName.of("two."), List.of(r3)));
         when(storage.findNearestNode(DomainName.of("three."), "IN")).thenReturn(
-            new Node(DomainName.of("three."), false, List.of(r4)));
+            new Node(DomainName.of("three."), List.of(r4)));
         when(storage.findNearestNode(DomainName.of("four."), "IN")).thenReturn(
-            new Node(DomainName.of("four."), false, List.of(r5)));
+            new Node(DomainName.of("four."), List.of(r5)));
         when(storage.findNearestNode(DomainName.of("five."), "IN")).thenReturn(
-            new Node(DomainName.of("five."), false, List.of(r6, r7)));
+            new Node(DomainName.of("five."), List.of(r6, r7)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
@@ -148,7 +148,7 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("ACC.EDU."), "IN"))
-            .thenReturn(new Node(DomainName.of("EDU."), true, List.of(r1)));
+            .thenReturn(new Node(DomainName.of("EDU."), List.of(r1)));
         when(storage.findNodeExact(DomainName.of("A.ISI.EDU."), "IN"))
             .thenReturn(null);
 
@@ -171,9 +171,9 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("USER.EDU."), "IN"))
-            .thenReturn(new Node(DomainName.of("EDU."), true, List.of(r1)));
+            .thenReturn(new Node(DomainName.of("EDU."), List.of(r1)));
         when(storage.findNodeExact(DomainName.of("B.ISI.EDU."), "IN"))
-            .thenReturn(new Node(DomainName.of("B.ISI.EDU."), true, List.of(r2, r3)));
+            .thenReturn(new Node(DomainName.of("B.ISI.EDU."), List.of(r2, r3)));
 
         NameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
@@ -207,11 +207,11 @@ public class LocalNameServiceTest {
 
         NameStorage storage = mock(NameStorage.class);
         when(storage.findNearestNode(DomainName.of("ACCOUNT.COM."), "IN"))
-            .thenReturn(new Node(DomainName.of("COM."), true, List.of(r1, r2, r3)));
+            .thenReturn(new Node(DomainName.of("COM."), List.of(r1, r2, r3)));
         when(storage.findNodeExact(DomainName.of("X.SERVICE.COM."), "IN"))
-            .thenReturn(new Node(DomainName.of("X.SERVICE.COM."), true, List.of(r4, r5, r6, r7, r8)));
+            .thenReturn(new Node(DomainName.of("X.SERVICE.COM."), List.of(r4, r5, r6, r7, r8)));
         when(storage.findNodeExact(DomainName.of("Y.SERVICE.COM."), "IN"))
-            .thenReturn(new Node(DomainName.of("Y.SERVICE.COM."), true, List.of(r9, r10, r11)));
+            .thenReturn(new Node(DomainName.of("Y.SERVICE.COM."), List.of(r9, r10, r11)));
         when(storage.findNodeExact(DomainName.of("Z.SERVICE.COM."), "IN"))
             .thenReturn(null);
 
