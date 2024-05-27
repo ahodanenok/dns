@@ -30,11 +30,11 @@ public class MXResourceRecordParserTest {
         assertEquals("MX", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(7201, record.getTtl());
-        assertEquals(DomainName.of("test-001.email."), record.getName());
+        assertEquals(DomainName.parse("test-001.email."), record.getName());
 
         MXResourceRecord mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(10, mxRecord.getPreference());
-        assertEquals(DomainName.of("admin"), mxRecord.getExchange());
+        assertEquals(DomainName.parse("admin"), mxRecord.getExchange());
 
         assertFalse(records.hasNext());
         records.close();
@@ -56,11 +56,11 @@ public class MXResourceRecordParserTest {
         assertEquals("MX", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(56789, record.getTtl());
-        assertEquals(DomainName.of("test-002.email."), record.getName());
+        assertEquals(DomainName.parse("test-002.email."), record.getName());
 
         MXResourceRecord mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(523, mxRecord.getPreference());
-        assertEquals(DomainName.of("abc.test-001.email."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("abc.test-001.email."), mxRecord.getExchange());
 
         assertFalse(records.hasNext());
         records.close();
@@ -82,11 +82,11 @@ public class MXResourceRecordParserTest {
         assertEquals("MX", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(300, record.getTtl());
-        assertEquals(DomainName.of("test-003.email."), record.getName());
+        assertEquals(DomainName.parse("test-003.email."), record.getName());
 
         MXResourceRecord mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(3, mxRecord.getPreference());
-        assertEquals(DomainName.of("one.two.three."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("one.two.three."), mxRecord.getExchange());
 
         assertFalse(records.hasNext());
         records.close();
@@ -107,11 +107,11 @@ public class MXResourceRecordParserTest {
         assertEquals("MX", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(222, record.getTtl());
-        assertEquals(DomainName.of("test-004.email."), record.getName());
+        assertEquals(DomainName.parse("test-004.email."), record.getName());
 
         MXResourceRecord mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(1234, mxRecord.getPreference());
-        assertEquals(DomainName.of("user.test.exchange."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("user.test.exchange."), mxRecord.getExchange());
 
         assertFalse(records.hasNext());
         records.close();
@@ -132,11 +132,11 @@ public class MXResourceRecordParserTest {
         assertEquals("MX", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(300000, record.getTtl());
-        assertEquals(DomainName.of("test-005.email."), record.getName());
+        assertEquals(DomainName.parse("test-005.email."), record.getName());
 
         MXResourceRecord mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(5, mxRecord.getPreference());
-        assertEquals(DomainName.of("srv.test."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("srv.test."), mxRecord.getExchange());
 
         assertFalse(records.hasNext());
         records.close();
@@ -165,50 +165,50 @@ public class MXResourceRecordParserTest {
         assertEquals("MX", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(3600, record.getTtl());
-        assertEquals(DomainName.of("test-006-1.email."), record.getName());
+        assertEquals(DomainName.parse("test-006-1.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(300, mxRecord.getPreference());
-        assertEquals(DomainName.of("exch-1.test."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("exch-1.test."), mxRecord.getExchange());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("MX", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(532124, record.getTtl());
-        assertEquals(DomainName.of("test-006-2.email."), record.getName());
+        assertEquals(DomainName.parse("test-006-2.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(1, mxRecord.getPreference());
-        assertEquals(DomainName.of("exch-2.test."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("exch-2.test."), mxRecord.getExchange());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("MX", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(532124, record.getTtl());
-        assertEquals(DomainName.of("test-006-3.email."), record.getName());
+        assertEquals(DomainName.parse("test-006-3.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(25234, mxRecord.getPreference());
-        assertEquals(DomainName.of("exch-3.test."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("exch-3.test."), mxRecord.getExchange());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("MX", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(720, record.getTtl());
-        assertEquals(DomainName.of("test-006-4.email."), record.getName());
+        assertEquals(DomainName.parse("test-006-4.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(344, mxRecord.getPreference());
-        assertEquals(DomainName.of("exch-4.test."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("exch-4.test."), mxRecord.getExchange());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("MX", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(720, record.getTtl());
-        assertEquals(DomainName.of("test-006-5.email."), record.getName());
+        assertEquals(DomainName.parse("test-006-5.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
         assertEquals(62, mxRecord.getPreference());
-        assertEquals(DomainName.of("exch-5.test."), mxRecord.getExchange());
+        assertEquals(DomainName.parse("exch-5.test."), mxRecord.getExchange());
 
         assertFalse(records.hasNext());
         records.close();

@@ -30,7 +30,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(4800, record.getTtl());
-        assertEquals(DomainName.of("test-001.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-001.hinfo."), record.getName());
 
         HInfoResourceRecord hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("DEC-KS10", hinfoRecord.getCPU());
@@ -56,7 +56,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(3200, record.getTtl());
-        assertEquals(DomainName.of("test-002.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-002.hinfo."), record.getName());
 
         HInfoResourceRecord hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("IBM-4381", hinfoRecord.getCPU());
@@ -82,7 +82,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(53000, record.getTtl());
-        assertEquals(DomainName.of("test-003.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-003.hinfo."), record.getName());
 
         HInfoResourceRecord hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("HP3000", hinfoRecord.getCPU());
@@ -107,7 +107,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(3411267, record.getTtl());
-        assertEquals(DomainName.of("test-004.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-004.hinfo."), record.getName());
 
         HInfoResourceRecord hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("MAC-II", hinfoRecord.getCPU());
@@ -132,7 +132,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(9, record.getTtl());
-        assertEquals(DomainName.of("test-005.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-005.hinfo."), record.getName());
 
         HInfoResourceRecord hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("TRS-80", hinfoRecord.getCPU());
@@ -165,7 +165,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(86400, record.getTtl());
-        assertEquals(DomainName.of("test-006-1.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-006-1.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("ZENITH-148", hinfoRecord.getCPU());
         assertEquals("TENEX", hinfoRecord.getOS());
@@ -175,7 +175,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(86400, record.getTtl());
-        assertEquals(DomainName.of("test-006-2.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-006-2.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("VAX", hinfoRecord.getCPU());
         assertEquals("NEXUS", hinfoRecord.getOS());
@@ -185,7 +185,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(3452, record.getTtl());
-        assertEquals(DomainName.of("test-006-3.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-006-3.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("PLI", hinfoRecord.getCPU());
         assertEquals("FUZZ", hinfoRecord.getOS());
@@ -195,7 +195,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(111111, record.getTtl());
-        assertEquals(DomainName.of("test-006-4.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-006-4.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("IMAGEN-8/300", hinfoRecord.getCPU());
         assertEquals("AMIGA-OS-3.1", hinfoRecord.getOS());
@@ -205,7 +205,7 @@ public class HInfoResourceRecordParserTest {
         assertEquals("HINFO", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(6534, record.getTtl());
-        assertEquals(DomainName.of("test-006-5.hinfo."), record.getName());
+        assertEquals(DomainName.parse("test-006-5.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
         assertEquals("HONEYWELL-DPS-6", hinfoRecord.getCPU());
         assertEquals("CHRYSALIS", hinfoRecord.getOS());

@@ -20,7 +20,7 @@ public class ZoneSupplierTest {
     @Test
     public void testGet() {
         SOAResourceRecord soaRecord = new SOAResourceRecord();
-        soaRecord.setName(DomainName.of("a.b.c."));
+        soaRecord.setName(DomainName.parse("a.b.c."));
         NSResourceRecord r1 = new NSResourceRecord();
         NSResourceRecord r2 = new NSResourceRecord();
 
@@ -32,7 +32,7 @@ public class ZoneSupplierTest {
         };
 
         Zone zone = supplier.get();
-        assertEquals(DomainName.of("a.b.c."), zone.getName());
+        assertEquals(DomainName.parse("a.b.c."), zone.getName());
         assertEquals(3, zone.getRecords().size());
         assertSame(soaRecord, zone.getRecords().get(0));
         assertSame(r1, zone.getRecords().get(1));
@@ -42,7 +42,7 @@ public class ZoneSupplierTest {
     @Test
     public void testGetInvalid() {
         SOAResourceRecord soaRecord = new SOAResourceRecord();
-        soaRecord.setName(DomainName.of("a.b.c."));
+        soaRecord.setName(DomainName.parse("a.b.c."));
         NSResourceRecord r1 = new NSResourceRecord();
 
         ZoneValidator validator = new ZoneValidator() {

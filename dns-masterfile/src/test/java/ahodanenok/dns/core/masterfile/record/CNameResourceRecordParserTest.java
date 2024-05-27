@@ -30,10 +30,10 @@ public class CNameResourceRecordParserTest {
         assertEquals("CNAME", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(3600, record.getTtl());
-        assertEquals(DomainName.of("test-001.cname."), record.getName());
+        assertEquals(DomainName.parse("test-001.cname."), record.getName());
 
         CNameResourceRecord cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-001.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-001.cname."), cnameRecord.getCanonicalName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -55,10 +55,10 @@ public class CNameResourceRecordParserTest {
         assertEquals("CNAME", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(1500, record.getTtl());
-        assertEquals(DomainName.of("test-002.cname."), record.getName());
+        assertEquals(DomainName.parse("test-002.cname."), record.getName());
 
         CNameResourceRecord cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-002.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-002.cname."), cnameRecord.getCanonicalName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -80,10 +80,10 @@ public class CNameResourceRecordParserTest {
         assertEquals("CNAME", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(200, record.getTtl());
-        assertEquals(DomainName.of("test-003.cname."), record.getName());
+        assertEquals(DomainName.parse("test-003.cname."), record.getName());
 
         CNameResourceRecord cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-003.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-003.cname."), cnameRecord.getCanonicalName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -104,10 +104,10 @@ public class CNameResourceRecordParserTest {
         assertEquals("CNAME", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(50000, record.getTtl());
-        assertEquals(DomainName.of("test-004.cname."), record.getName());
+        assertEquals(DomainName.parse("test-004.cname."), record.getName());
 
         CNameResourceRecord cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-004.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-004.cname."), cnameRecord.getCanonicalName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -129,10 +129,10 @@ public class CNameResourceRecordParserTest {
         assertEquals("CNAME", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(25, record.getTtl());
-        assertEquals(DomainName.of("test-005.cname."), record.getName());
+        assertEquals(DomainName.parse("test-005.cname."), record.getName());
 
         CNameResourceRecord cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-005.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-005.cname."), cnameRecord.getCanonicalName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -161,45 +161,45 @@ public class CNameResourceRecordParserTest {
         assertEquals("CNAME", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(1200, record.getTtl());
-        assertEquals(DomainName.of("test-006-1.cname."), record.getName());
+        assertEquals(DomainName.parse("test-006-1.cname."), record.getName());
         cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-006-1.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-006-1.cname."), cnameRecord.getCanonicalName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("CNAME", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(720000, record.getTtl());
-        assertEquals(DomainName.of("test-006-2.cname."), record.getName());
+        assertEquals(DomainName.parse("test-006-2.cname."), record.getName());
         cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-006-2.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-006-2.cname."), cnameRecord.getCanonicalName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("CNAME", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(720000, record.getTtl());
-        assertEquals(DomainName.of("test-006-3.cname."), record.getName());
+        assertEquals(DomainName.parse("test-006-3.cname."), record.getName());
         cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-006-3.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-006-3.cname."), cnameRecord.getCanonicalName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("CNAME", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(245, record.getTtl());
-        assertEquals(DomainName.of("test-006-4.cname."), record.getName());
+        assertEquals(DomainName.parse("test-006-4.cname."), record.getName());
         cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-006-4.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-006-4.cname."), cnameRecord.getCanonicalName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("CNAME", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(245, record.getTtl());
-        assertEquals(DomainName.of("test-006-5.cname."), record.getName());
+        assertEquals(DomainName.parse("test-006-5.cname."), record.getName());
         cnameRecord = assertInstanceOf(CNameResourceRecord.class, record);
-        assertEquals(DomainName.of("canonical.test-006-5.cname."), cnameRecord.getCanonicalName());
+        assertEquals(DomainName.parse("canonical.test-006-5.cname."), cnameRecord.getCanonicalName());
 
         assertFalse(records.hasNext());
         records.close();

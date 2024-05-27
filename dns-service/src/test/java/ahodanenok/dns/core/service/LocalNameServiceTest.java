@@ -30,12 +30,12 @@ public class LocalNameServiceTest {
         HInfoResourceRecord r3 = new HInfoResourceRecord();
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("db.cluster."), "IN")).thenReturn(
-            new Node(DomainName.of("db.cluster."), List.of(r1, r2, r3)));
+        when(storage.findNearestNode(DomainName.parse("db.cluster."), "IN")).thenReturn(
+            new Node(DomainName.parse("db.cluster."), List.of(r1, r2, r3)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("db.cluster."), "A", "IN")));
+            new Query(new Question(DomainName.parse("db.cluster."), "A", "IN")));
         assertEquals(1, response.getAnswer().size());
         assertSame(r1, response.getAnswer().get(0));
     }
@@ -51,12 +51,12 @@ public class LocalNameServiceTest {
         AResourceRecord r7 = new AResourceRecord();
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("user.mailbox."), "CS")).thenReturn(
-            new Node(DomainName.of("user.mailbox."), List.of(r1, r2, r3, r4, r5, r6, r7)));
+        when(storage.findNearestNode(DomainName.parse("user.mailbox."), "CS")).thenReturn(
+            new Node(DomainName.parse("user.mailbox."), List.of(r1, r2, r3, r4, r5, r6, r7)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("user.mailbox."), "MX", "CS")));
+            new Query(new Question(DomainName.parse("user.mailbox."), "MX", "CS")));
         assertEquals(3, response.getAnswer().size());
         assertSame(r2, response.getAnswer().get(0));
         assertSame(r5, response.getAnswer().get(1));
@@ -66,15 +66,15 @@ public class LocalNameServiceTest {
     @Test
     public void testExactMatchCName() {
         CNameResourceRecord r1 = new CNameResourceRecord();
-        r1.setCanonicalName(DomainName.of("world."));
+        r1.setCanonicalName(DomainName.parse("world."));
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("hello."), "IN")).thenReturn(
-            new Node(DomainName.of("hello."), List.of(r1)));
+        when(storage.findNearestNode(DomainName.parse("hello."), "IN")).thenReturn(
+            new Node(DomainName.parse("hello."), List.of(r1)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("hello."), "CNAME", "IN")));
+            new Query(new Question(DomainName.parse("hello."), "CNAME", "IN")));
         assertEquals(1, response.getAnswer().size());
         assertSame(r1, response.getAnswer().get(0));
     }
@@ -82,19 +82,19 @@ public class LocalNameServiceTest {
     @Test
     public void testFollowOneCName() {
         CNameResourceRecord r1 = new CNameResourceRecord();
-        r1.setCanonicalName(DomainName.of("static.data."));
+        r1.setCanonicalName(DomainName.parse("static.data."));
         AResourceRecord r2 = new AResourceRecord();
         MXResourceRecord r3 = new MXResourceRecord();
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("images."), "IN")).thenReturn(
-            new Node(DomainName.of("images."), List.of(r1)));
-        when(storage.findNearestNode(DomainName.of("static.data."), "IN")).thenReturn(
-            new Node(DomainName.of("static.data."), List.of(r2, r3)));
+        when(storage.findNearestNode(DomainName.parse("images."), "IN")).thenReturn(
+            new Node(DomainName.parse("images."), List.of(r1)));
+        when(storage.findNearestNode(DomainName.parse("static.data."), "IN")).thenReturn(
+            new Node(DomainName.parse("static.data."), List.of(r2, r3)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("images."), "A", "IN")));
+            new Query(new Question(DomainName.parse("images."), "A", "IN")));
         assertEquals(2, response.getAnswer().size());
         assertSame(r1, response.getAnswer().get(0));
         assertSame(r2, response.getAnswer().get(1));
@@ -103,35 +103,35 @@ public class LocalNameServiceTest {
     @Test
     public void testFollowMultipleCNames() {
         CNameResourceRecord r1 = new CNameResourceRecord();
-        r1.setCanonicalName(DomainName.of("one."));
+        r1.setCanonicalName(DomainName.parse("one."));
         CNameResourceRecord r2 = new CNameResourceRecord();
-        r2.setCanonicalName(DomainName.of("two."));
+        r2.setCanonicalName(DomainName.parse("two."));
         CNameResourceRecord r3 = new CNameResourceRecord();
-        r3.setCanonicalName(DomainName.of("three."));
+        r3.setCanonicalName(DomainName.parse("three."));
         CNameResourceRecord r4 = new CNameResourceRecord();
-        r4.setCanonicalName(DomainName.of("four."));
+        r4.setCanonicalName(DomainName.parse("four."));
         CNameResourceRecord r5 = new CNameResourceRecord();
-        r5.setCanonicalName(DomainName.of("five."));
+        r5.setCanonicalName(DomainName.parse("five."));
         AResourceRecord r6 = new AResourceRecord();
         MXResourceRecord r7 = new MXResourceRecord();
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("initial."), "IN")).thenReturn(
-            new Node(DomainName.of("initial."), List.of(r1)));
-        when(storage.findNearestNode(DomainName.of("one."), "IN")).thenReturn(
-            new Node(DomainName.of("one."), List.of(r2)));
-        when(storage.findNearestNode(DomainName.of("two."), "IN")).thenReturn(
-            new Node(DomainName.of("two."), List.of(r3)));
-        when(storage.findNearestNode(DomainName.of("three."), "IN")).thenReturn(
-            new Node(DomainName.of("three."), List.of(r4)));
-        when(storage.findNearestNode(DomainName.of("four."), "IN")).thenReturn(
-            new Node(DomainName.of("four."), List.of(r5)));
-        when(storage.findNearestNode(DomainName.of("five."), "IN")).thenReturn(
-            new Node(DomainName.of("five."), List.of(r6, r7)));
+        when(storage.findNearestNode(DomainName.parse("initial."), "IN")).thenReturn(
+            new Node(DomainName.parse("initial."), List.of(r1)));
+        when(storage.findNearestNode(DomainName.parse("one."), "IN")).thenReturn(
+            new Node(DomainName.parse("one."), List.of(r2)));
+        when(storage.findNearestNode(DomainName.parse("two."), "IN")).thenReturn(
+            new Node(DomainName.parse("two."), List.of(r3)));
+        when(storage.findNearestNode(DomainName.parse("three."), "IN")).thenReturn(
+            new Node(DomainName.parse("three."), List.of(r4)));
+        when(storage.findNearestNode(DomainName.parse("four."), "IN")).thenReturn(
+            new Node(DomainName.parse("four."), List.of(r5)));
+        when(storage.findNearestNode(DomainName.parse("five."), "IN")).thenReturn(
+            new Node(DomainName.parse("five."), List.of(r6, r7)));
 
         LocalNameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("initial."), "MX", "IN")));
+            new Query(new Question(DomainName.parse("initial."), "MX", "IN")));
         assertEquals(6, response.getAnswer().size());
         assertSame(r1, response.getAnswer().get(0));
         assertSame(r2, response.getAnswer().get(1));
@@ -144,17 +144,17 @@ public class LocalNameServiceTest {
     @Test
     public void testReferralOneNSWithNoGlueData() {
         NSResourceRecord r1 = new NSResourceRecord();
-        r1.setNSName(DomainName.of("A.ISI.EDU."));
+        r1.setNSName(DomainName.parse("A.ISI.EDU."));
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("ACC.EDU."), "IN"))
-            .thenReturn(new Node(DomainName.of("EDU."), List.of(r1)));
-        when(storage.findNodeExact(DomainName.of("A.ISI.EDU."), "IN"))
+        when(storage.findNearestNode(DomainName.parse("ACC.EDU."), "IN"))
+            .thenReturn(new Node(DomainName.parse("EDU."), List.of(r1)));
+        when(storage.findNodeExact(DomainName.parse("A.ISI.EDU."), "IN"))
             .thenReturn(null);
 
         NameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("ACC.EDU."), "MX", "IN")));
+            new Query(new Question(DomainName.parse("ACC.EDU."), "MX", "IN")));
         assertEquals(0, response.getAnswer().size());
         assertEquals(1, response.getAuthority().size());
         assertSame(r1, response.getAuthority().get(0));
@@ -165,19 +165,19 @@ public class LocalNameServiceTest {
     public void testReferralOneNSWithGlueData() {
         NSResourceRecord r1 = new NSResourceRecord();
         r1.setRClass("IN");
-        r1.setNSName(DomainName.of("B.ISI.EDU."));
+        r1.setNSName(DomainName.parse("B.ISI.EDU."));
         AResourceRecord r2 = new AResourceRecord();
         MXResourceRecord r3 = new MXResourceRecord();
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("USER.EDU."), "IN"))
-            .thenReturn(new Node(DomainName.of("EDU."), List.of(r1)));
-        when(storage.findNodeExact(DomainName.of("B.ISI.EDU."), "IN"))
-            .thenReturn(new Node(DomainName.of("B.ISI.EDU."), List.of(r2, r3)));
+        when(storage.findNearestNode(DomainName.parse("USER.EDU."), "IN"))
+            .thenReturn(new Node(DomainName.parse("EDU."), List.of(r1)));
+        when(storage.findNodeExact(DomainName.parse("B.ISI.EDU."), "IN"))
+            .thenReturn(new Node(DomainName.parse("B.ISI.EDU."), List.of(r2, r3)));
 
         NameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("USER.EDU."), "HINFO", "IN")));
+            new Query(new Question(DomainName.parse("USER.EDU."), "HINFO", "IN")));
         assertEquals(0, response.getAnswer().size());
         assertEquals(1, response.getAuthority().size());
         assertSame(r1, response.getAuthority().get(0));
@@ -189,13 +189,13 @@ public class LocalNameServiceTest {
     public void testReferralMultipleNSWithGlueData() {
         NSResourceRecord r1 = new NSResourceRecord();
         r1.setRClass("IN");
-        r1.setNSName(DomainName.of("X.SERVICE.COM."));
+        r1.setNSName(DomainName.parse("X.SERVICE.COM."));
         NSResourceRecord r2 = new NSResourceRecord();
         r2.setRClass("IN");
-        r2.setNSName(DomainName.of("Y.SERVICE.COM."));
+        r2.setNSName(DomainName.parse("Y.SERVICE.COM."));
         NSResourceRecord r3 = new NSResourceRecord();
         r3.setRClass("IN");
-        r3.setNSName(DomainName.of("Z.SERVICE.COM."));
+        r3.setNSName(DomainName.parse("Z.SERVICE.COM."));
         AResourceRecord r4 = new AResourceRecord();
         MXResourceRecord r5 = new MXResourceRecord();
         AResourceRecord r6 = new AResourceRecord();
@@ -206,18 +206,18 @@ public class LocalNameServiceTest {
         AResourceRecord r11 = new AResourceRecord();
 
         NameStorage storage = mock(NameStorage.class);
-        when(storage.findNearestNode(DomainName.of("ACCOUNT.COM."), "IN"))
-            .thenReturn(new Node(DomainName.of("COM."), List.of(r1, r2, r3)));
-        when(storage.findNodeExact(DomainName.of("X.SERVICE.COM."), "IN"))
-            .thenReturn(new Node(DomainName.of("X.SERVICE.COM."), List.of(r4, r5, r6, r7, r8)));
-        when(storage.findNodeExact(DomainName.of("Y.SERVICE.COM."), "IN"))
-            .thenReturn(new Node(DomainName.of("Y.SERVICE.COM."), List.of(r9, r10, r11)));
-        when(storage.findNodeExact(DomainName.of("Z.SERVICE.COM."), "IN"))
+        when(storage.findNearestNode(DomainName.parse("ACCOUNT.COM."), "IN"))
+            .thenReturn(new Node(DomainName.parse("COM."), List.of(r1, r2, r3)));
+        when(storage.findNodeExact(DomainName.parse("X.SERVICE.COM."), "IN"))
+            .thenReturn(new Node(DomainName.parse("X.SERVICE.COM."), List.of(r4, r5, r6, r7, r8)));
+        when(storage.findNodeExact(DomainName.parse("Y.SERVICE.COM."), "IN"))
+            .thenReturn(new Node(DomainName.parse("Y.SERVICE.COM."), List.of(r9, r10, r11)));
+        when(storage.findNodeExact(DomainName.parse("Z.SERVICE.COM."), "IN"))
             .thenReturn(null);
 
         NameService service = new LocalNameService(storage);
         QueryResponse response = service.processQuery(
-            new Query(new Question(DomainName.of("ACCOUNT.COM."), "HINFO", "IN")));
+            new Query(new Question(DomainName.parse("ACCOUNT.COM."), "HINFO", "IN")));
         assertEquals(0, response.getAnswer().size());
         assertEquals(3, response.getAuthority().size());
         assertSame(r1, response.getAuthority().get(0));

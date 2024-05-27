@@ -30,10 +30,10 @@ public class PTRResourceRecordParserTest {
         assertEquals("PTR", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(3600, record.getTtl());
-        assertEquals(DomainName.of("22.0.2.10.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("22.0.2.10.IN-ADDR.ARPA."), record.getName());
 
         PTRResourceRecord ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-001."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-001."), ptrRecord.getTargetName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -55,10 +55,10 @@ public class PTRResourceRecordParserTest {
         assertEquals("PTR", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(15000, record.getTtl());
-        assertEquals(DomainName.of("10.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("10.IN-ADDR.ARPA."), record.getName());
 
         PTRResourceRecord ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-002."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-002."), ptrRecord.getTargetName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -80,10 +80,10 @@ public class PTRResourceRecordParserTest {
         assertEquals("PTR", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(500, record.getTtl());
-        assertEquals(DomainName.of("some.address.test-003."), record.getName());
+        assertEquals(DomainName.parse("some.address.test-003."), record.getName());
 
         PTRResourceRecord ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-003."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-003."), ptrRecord.getTargetName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -104,10 +104,10 @@ public class PTRResourceRecordParserTest {
         assertEquals("PTR", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(86400, record.getTtl());
-        assertEquals(DomainName.of("1.2.3.4.in-addr.arpa."), record.getName());
+        assertEquals(DomainName.parse("1.2.3.4.in-addr.arpa."), record.getName());
 
         PTRResourceRecord ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-004."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-004."), ptrRecord.getTargetName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -128,10 +128,10 @@ public class PTRResourceRecordParserTest {
         assertEquals("PTR", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(678, record.getTtl());
-        assertEquals(DomainName.of("10.20.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("10.20.IN-ADDR.ARPA."), record.getName());
 
         PTRResourceRecord ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-005."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-005."), ptrRecord.getTargetName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -160,45 +160,45 @@ public class PTRResourceRecordParserTest {
         assertEquals("PTR", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(720, record.getTtl());
-        assertEquals(DomainName.of("10.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("10.IN-ADDR.ARPA."), record.getName());
         ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-006-1."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-006-1."), ptrRecord.getTargetName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("PTR", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(36000, record.getTtl());
-        assertEquals(DomainName.of("20.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("20.IN-ADDR.ARPA."), record.getName());
         ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-006-2."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-006-2."), ptrRecord.getTargetName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("PTR", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(36000, record.getTtl());
-        assertEquals(DomainName.of("30.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("30.IN-ADDR.ARPA."), record.getName());
         ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-006-3."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-006-3."), ptrRecord.getTargetName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("PTR", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(5450, record.getTtl());
-        assertEquals(DomainName.of("40.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("40.IN-ADDR.ARPA."), record.getName());
         ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-006-4."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-006-4."), ptrRecord.getTargetName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("PTR", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(32, record.getTtl());
-        assertEquals(DomainName.of("50.IN-ADDR.ARPA."), record.getName());
+        assertEquals(DomainName.parse("50.IN-ADDR.ARPA."), record.getName());
         ptrRecord = assertInstanceOf(PTRResourceRecord.class, record);
-        assertEquals(DomainName.of("ptr.test-006-5."), ptrRecord.getTargetName());
+        assertEquals(DomainName.parse("ptr.test-006-5."), ptrRecord.getTargetName());
 
         assertFalse(records.hasNext());
         records.close();

@@ -12,13 +12,13 @@ public class ZoneTest {
     @Test
     public void testGetName() {
         SOAResourceRecord soaRecord = new SOAResourceRecord();
-        soaRecord.setName(DomainName.of("soa.test."));
+        soaRecord.setName(DomainName.parse("soa.test."));
 
-        assertEquals(DomainName.of("soa.test."),
+        assertEquals(DomainName.parse("soa.test."),
             new Zone(List.of(soaRecord, new CNameResourceRecord(), new NSResourceRecord())).getName());
-        assertEquals(DomainName.of("soa.test."),
+        assertEquals(DomainName.parse("soa.test."),
             new Zone(List.of(new CNameResourceRecord(), soaRecord, new NSResourceRecord())).getName());
-        assertEquals(DomainName.of("soa.test."),
+        assertEquals(DomainName.parse("soa.test."),
             new Zone(List.of(new NSResourceRecord(), new CNameResourceRecord(), soaRecord)).getName());
     }
 

@@ -30,7 +30,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(54321, record.getTtl());
-        assertEquals(DomainName.of("test-001.address."), record.getName());
+        assertEquals(DomainName.parse("test-001.address."), record.getName());
 
         AResourceRecord aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("173.54.23.123", aRecord.getAddress());
@@ -55,7 +55,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(321, record.getTtl());
-        assertEquals(DomainName.of("test-002.address."), record.getName());
+        assertEquals(DomainName.parse("test-002.address."), record.getName());
 
         AResourceRecord aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("253.234.123.6", aRecord.getAddress());
@@ -80,7 +80,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(3600, record.getTtl());
-        assertEquals(DomainName.of("test-003.address."), record.getName());
+        assertEquals(DomainName.parse("test-003.address."), record.getName());
 
         AResourceRecord aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("100.101.102.103", aRecord.getAddress());
@@ -104,7 +104,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(48400, record.getTtl());
-        assertEquals(DomainName.of("test-004.address."), record.getName());
+        assertEquals(DomainName.parse("test-004.address."), record.getName());
 
         AResourceRecord aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("1.2.3.4", aRecord.getAddress());
@@ -129,7 +129,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(12, record.getTtl());
-        assertEquals(DomainName.of("test-005.address."), record.getName());
+        assertEquals(DomainName.parse("test-005.address."), record.getName());
 
         AResourceRecord aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("23.76.22.15", aRecord.getAddress());
@@ -161,7 +161,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(5231, record.getTtl());
-        assertEquals(DomainName.of("test-006-1.address."), record.getName());
+        assertEquals(DomainName.parse("test-006-1.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("11.234.2.55", aRecord.getAddress());
 
@@ -170,7 +170,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(720000, record.getTtl());
-        assertEquals(DomainName.of("test-006-2.address."), record.getName());
+        assertEquals(DomainName.parse("test-006-2.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("8.25.4.89", aRecord.getAddress());
 
@@ -179,7 +179,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(720000, record.getTtl());
-        assertEquals(DomainName.of("test-006-3.address."), record.getName());
+        assertEquals(DomainName.parse("test-006-3.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("192.168.5.100", aRecord.getAddress());
 
@@ -188,7 +188,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(3246, record.getTtl());
-        assertEquals(DomainName.of("test-006-4.address."), record.getName());
+        assertEquals(DomainName.parse("test-006-4.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("127.0.0.1", aRecord.getAddress());
 
@@ -197,7 +197,7 @@ public class AResourceRecordParserTest {
         assertEquals("A", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(3246, record.getTtl());
-        assertEquals(DomainName.of("test-006-5.address."), record.getName());
+        assertEquals(DomainName.parse("test-006-5.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
         assertEquals("201.22.34.112", aRecord.getAddress());
 

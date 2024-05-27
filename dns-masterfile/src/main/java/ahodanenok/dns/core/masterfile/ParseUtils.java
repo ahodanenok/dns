@@ -8,7 +8,7 @@ public final class ParseUtils {
 
     public static DomainName parseDomainName(MasterFileDataReader reader) {
         try {
-            return DomainName.of(reader.readString());
+            return DomainName.parse(reader.readString());
         } catch (IOException e) {
             throw new MasterFileParseException("todo", e);
         }

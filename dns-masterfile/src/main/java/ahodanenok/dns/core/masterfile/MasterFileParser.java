@@ -89,7 +89,7 @@ public final class MasterFileParser {
         } else if (str.length() == 1 && CharacterUtils.isBlank(str.charAt(0))) {
             name = null;
         } else {
-            name = DomainName.of(str);
+            name = DomainName.parse(str);
         }
 
         str = reader.readString();

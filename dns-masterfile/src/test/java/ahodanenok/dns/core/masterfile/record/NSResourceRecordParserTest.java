@@ -30,10 +30,10 @@ public class NSResourceRecordParserTest {
         assertEquals("NS", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(4800, record.getTtl());
-        assertEquals(DomainName.of("test-001."), record.getName());
+        assertEquals(DomainName.parse("test-001."), record.getName());
 
         NSResourceRecord nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-001."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-001."), nsRecord.getNSName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -55,10 +55,10 @@ public class NSResourceRecordParserTest {
         assertEquals("NS", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(200, record.getTtl());
-        assertEquals(DomainName.of("test-002."), record.getName());
+        assertEquals(DomainName.parse("test-002."), record.getName());
 
         NSResourceRecord nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-002."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-002."), nsRecord.getNSName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -80,10 +80,10 @@ public class NSResourceRecordParserTest {
         assertEquals("NS", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(500, record.getTtl());
-        assertEquals(DomainName.of("test-003."), record.getName());
+        assertEquals(DomainName.parse("test-003."), record.getName());
 
         NSResourceRecord nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-003."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-003."), nsRecord.getNSName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -104,10 +104,10 @@ public class NSResourceRecordParserTest {
         assertEquals("NS", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(32, record.getTtl());
-        assertEquals(DomainName.of("test-004."), record.getName());
+        assertEquals(DomainName.parse("test-004."), record.getName());
 
         NSResourceRecord nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-004."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-004."), nsRecord.getNSName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -129,10 +129,10 @@ public class NSResourceRecordParserTest {
         assertEquals("NS", record.getType());
         assertEquals("CH", record.getRClass());
         assertEquals(550, record.getTtl());
-        assertEquals(DomainName.of("test-005."), record.getName());
+        assertEquals(DomainName.parse("test-005."), record.getName());
 
         NSResourceRecord nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-005."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-005."), nsRecord.getNSName());
 
         assertFalse(records.hasNext());
         records.close();
@@ -161,45 +161,45 @@ public class NSResourceRecordParserTest {
         assertEquals("NS", record.getType());
         assertEquals("IN", record.getRClass());
         assertEquals(1200, record.getTtl());
-        assertEquals(DomainName.of("test-006-1."), record.getName());
+        assertEquals(DomainName.parse("test-006-1."), record.getName());
         nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-006-1."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-006-1."), nsRecord.getNSName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("NS", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(1200, record.getTtl());
-        assertEquals(DomainName.of("test-006-2."), record.getName());
+        assertEquals(DomainName.parse("test-006-2."), record.getName());
         nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-006-2."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-006-2."), nsRecord.getNSName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("NS", record.getType());
         assertEquals("CS", record.getRClass());
         assertEquals(720000, record.getTtl());
-        assertEquals(DomainName.of("test-006-3."), record.getName());
+        assertEquals(DomainName.parse("test-006-3."), record.getName());
         nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-006-3."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-006-3."), nsRecord.getNSName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("NS", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(720000, record.getTtl());
-        assertEquals(DomainName.of("test-006-4."), record.getName());
+        assertEquals(DomainName.parse("test-006-4."), record.getName());
         nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-006-4."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-006-4."), nsRecord.getNSName());
 
         assertTrue(records.hasNext());
         record = records.next();
         assertEquals("NS", record.getType());
         assertEquals("HS", record.getRClass());
         assertEquals(245, record.getTtl());
-        assertEquals(DomainName.of("test-006-5."), record.getName());
+        assertEquals(DomainName.parse("test-006-5."), record.getName());
         nsRecord = assertInstanceOf(NSResourceRecord.class, record);
-        assertEquals(DomainName.of("ns.test-006-5."), nsRecord.getNSName());
+        assertEquals(DomainName.parse("ns.test-006-5."), nsRecord.getNSName());
 
         assertFalse(records.hasNext());
         records.close();

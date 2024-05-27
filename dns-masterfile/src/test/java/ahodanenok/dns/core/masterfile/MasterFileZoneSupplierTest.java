@@ -25,37 +25,37 @@ public class MasterFileZoneSupplierTest {
         MasterFileZoneSupplier supplier = new MasterFileZoneSupplier(parser, FileUtils.getTestFilePath("sp.zone"));
         Zone zone = supplier.get();
 
-        assertEquals(DomainName.of("abc.local."), zone.getName());
+        assertEquals(DomainName.parse("abc.local."), zone.getName());
         assertEquals(5, zone.getRecords().size());
 
         ResourceRecord r;
 
         r = zone.getRecords().get(0);
-        assertEquals(DomainName.of("abc.local."), r.getName());
+        assertEquals(DomainName.parse("abc.local."), r.getName());
         assertEquals("SOA", r.getType());
         assertEquals("IN", r.getRClass());
         assertEquals(3600, r.getTtl());
 
         r = zone.getRecords().get(1);
-        assertEquals(DomainName.of("a.abc.local."), r.getName());
+        assertEquals(DomainName.parse("a.abc.local."), r.getName());
         assertEquals("NS", r.getType());
         assertEquals("IN", r.getRClass());
         assertEquals(200, r.getTtl());
 
         r = zone.getRecords().get(2);
-        assertEquals(DomainName.of("b.abc.local."), r.getName());
+        assertEquals(DomainName.parse("b.abc.local."), r.getName());
         assertEquals("NS", r.getType());
         assertEquals("IN", r.getRClass());
         assertEquals(300, r.getTtl());
 
         r = zone.getRecords().get(3);
-        assertEquals(DomainName.of("c.abc.local."), r.getName());
+        assertEquals(DomainName.parse("c.abc.local."), r.getName());
         assertEquals("NS", r.getType());
         assertEquals("IN", r.getRClass());
         assertEquals(400, r.getTtl());
 
         r = zone.getRecords().get(4);
-        assertEquals(DomainName.of("d.abc.local."), r.getName());
+        assertEquals(DomainName.parse("d.abc.local."), r.getName());
         assertEquals("CNAME", r.getType());
         assertEquals("IN", r.getRClass());
         assertEquals(86400, r.getTtl());
@@ -75,11 +75,11 @@ public class MasterFileZoneSupplierTest {
         Zone zone;
 
         zone = supplier.get();
-        assertEquals(DomainName.of("abc.local."), zone.getName());
+        assertEquals(DomainName.parse("abc.local."), zone.getName());
         assertEquals(5, zone.getRecords().size());
 
         zone = supplier.get();
-        assertEquals(DomainName.of("abc.local."), zone.getName());
+        assertEquals(DomainName.parse("abc.local."), zone.getName());
         assertEquals(5, zone.getRecords().size());
     }
 }
