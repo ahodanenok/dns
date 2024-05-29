@@ -1,6 +1,8 @@
 package ahodanenok.dns.core.model;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public final class DomainName {
@@ -49,6 +51,30 @@ public final class DomainName {
 
     public boolean isAbsolute() {
         return labels[labels.length - 1].equals(ROOT_LABEL);
+    }
+
+    public Iterable<DomainName> ancestors() {
+        return () -> new Iterator<>() {
+
+            int pos = 1;
+
+            @Override
+            public boolean hasNext() {
+                return pos < labels.length;
+            }
+
+            @Override
+            public DomainName next() {
+                if (pos >= labels.length) {
+                    throw new NoSuchElementException("No more ancestors");
+                }
+
+                String[] ancestorLabels = Arrays.copyOfRange(labels, pos, labels.length);
+                pos++;
+
+                return DomainName.of(ancestorLabels);
+            }
+        };
     }
 
     @Override

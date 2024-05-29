@@ -1,5 +1,10 @@
 package ahodanenok.dns.core.model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -131,5 +136,130 @@ public class DomainNameTest {
         assertThrows(IllegalArgumentException.class, () -> DomainName.of("", "data"));
         assertThrows(IllegalArgumentException.class, () -> DomainName.of("a", "", "b"));
         assertThrows(IllegalArgumentException.class, () -> DomainName.of("a", "b", "c", "", ""));
+    }
+
+    @Test
+    public void testGetAncestorsAbsolute_1() {
+        Iterator<DomainName> ancestors = DomainName.of("").ancestors().iterator();
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testGetAncestorsAbsolute_2() {
+        Iterator<DomainName> ancestors = DomainName.of("com", "").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of(""), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testGetAncestorsAbsolute_3() {
+        Iterator<DomainName> ancestors = DomainName.of("hello", "world", "").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("world", ""), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of(""), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testGetAncestorsAbsolute_4() {
+        Iterator<DomainName> ancestors = DomainName.of("abc", "test", "org", "").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("test", "org", ""), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("org", ""), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of(""), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testGetAncestorsAbsolute_5() {
+        Iterator<DomainName> ancestors = DomainName.of("a", "b", "c", "D", "").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("b", "c", "D", ""), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("c", "D", ""), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("D", ""), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of(""), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testAncestorsRelative_1() {
+        Iterator<DomainName> ancestors = DomainName.of("service").ancestors().iterator();
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testAncestorsRelative_2() {
+        Iterator<DomainName> ancestors = DomainName.of("control", "plane").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("plane"), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testAncestorsRelative_3() {
+        Iterator<DomainName> ancestors = DomainName.of("AAA", "BBB", "CCC").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("BBB", "CCC"), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("CCC"), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testAncestorsRelative_4() {
+        Iterator<DomainName> ancestors = DomainName.of("a", "b", "c", "d").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("b", "c", "d"), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("c", "d"), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("d"), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testAncestorsRelative_5() {
+        Iterator<DomainName> ancestors = DomainName.of("NS", "SOA", "CNAME", "A", "AAAA").ancestors().iterator();
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("SOA", "CNAME", "A", "AAAA"), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("CNAME", "A", "AAAA"), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("A", "AAAA"), ancestors.next());
+        assertTrue(ancestors.hasNext());
+        assertEquals(DomainName.of("AAAA"), ancestors.next());
+        assertFalse(ancestors.hasNext());
+        assertThrows(NoSuchElementException.class, () -> ancestors.next());
+    }
+
+    @Test
+    public void testAncestorsForEach() {
+        List<DomainName> ancestors = new ArrayList<>();
+        for (DomainName ancestor : DomainName.of("one", "two", "three", "four", "five", "").ancestors()) {
+            ancestors.add(ancestor);
+        }
+
+        assertEquals(5, ancestors.size());
+        assertEquals(DomainName.of("two", "three", "four", "five", ""), ancestors.get(0));
+        assertEquals(DomainName.of("three", "four", "five", ""), ancestors.get(1));
+        assertEquals(DomainName.of("four", "five", ""), ancestors.get(2));
+        assertEquals(DomainName.of("five", ""), ancestors.get(3));
+        assertEquals(DomainName.of(""), ancestors.get(4));
     }
 }
