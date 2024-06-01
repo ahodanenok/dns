@@ -3,6 +3,7 @@ package ahodanenok.dns.core.model;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public final class DomainName {
@@ -91,6 +92,11 @@ public final class DomainName {
         }
 
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(labels);
     }
 
     @Override

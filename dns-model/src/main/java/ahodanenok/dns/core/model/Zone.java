@@ -21,6 +21,10 @@ public final class Zone {
         return soaRecord.getName();
     }
 
+    public String getRClass() {
+        return soaRecord.getRClass();
+    }
+
     public long getSerial() {
         return soaRecord.getSerial();
     }
