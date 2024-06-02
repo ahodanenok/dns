@@ -15,6 +15,7 @@
   <modules>
     <module>dns-masterfile</module>
     <module>dns-model</module>
+    <module>dns-server</module>
     <module>dns-service</module>
     <module>dns-storage</module>
     <module>dns-zone</module>
