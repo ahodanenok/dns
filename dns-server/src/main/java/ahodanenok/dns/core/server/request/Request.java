@@ -1,11 +1,13 @@
 package ahodanenok.dns.core.server.request;
 
-import ahodanenok.dns.core.model.query.Query;
-import ahodanenok.dns.core.model.query.QueryResponse;
+import ahodanenok.dns.core.model.message.MessageHeader;
+import ahodanenok.dns.core.model.message.MessageSections;
 
 public interface Request {
 
-    Query getQuery();
+    MessageHeader getHeader();
+    
+    MessageSections getSections();
 
-    void complete(QueryResponse response);
+    void complete(Response response);
 }

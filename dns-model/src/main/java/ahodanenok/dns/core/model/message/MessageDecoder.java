@@ -1,4 +1,4 @@
-package ahodanenok.dns.core.server.message;
+package ahodanenok.dns.core.model.message;
 
 import java.io.InputStream;
 

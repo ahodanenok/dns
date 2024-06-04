@@ -12,6 +12,6 @@ public final class DefaultRequestHandler implements RequestHandler {
 
     @Override
     public void handleRequest(Request request) {
-        nameService.processQuery(request.getQuery());
+        
     }
 }
