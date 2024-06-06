@@ -5,8 +5,8 @@ import java.util.concurrent.Executors;
 import ahodanenok.dns.core.masterfile.DefaultMasterFileParserConfiguration;
 import ahodanenok.dns.core.masterfile.MasterFileParser;
 import ahodanenok.dns.core.masterfile.MasterFileZoneSupplier;
-import ahodanenok.dns.core.model.message.MessageDecoder;
-import ahodanenok.dns.core.model.message.MessageEncoder;
+import ahodanenok.dns.core.model.message.format.MessageDecoder;
+import ahodanenok.dns.core.model.message.format.MessageEncoder;
 import ahodanenok.dns.core.server.request.DefaultRequestHandler;
 import ahodanenok.dns.core.server.request.ExecutorServiceRequestProcessor;
 import ahodanenok.dns.core.server.request.RequestHandler;
@@ -35,7 +35,7 @@ public final class NameServer {
         RequestProcessor requestProcessor =
             new ExecutorServiceRequestProcessor(Executors.newSingleThreadExecutor(), requestHandler);
 
-        MessageDecoder messageDecoder = null;
+        MessageDecoder<?> messageDecoder = null;
         MessageEncoder messageEncoder = null;
 
         UDPTransportHandler udp = new UDPTransportHandler(requestProcessor, messageDecoder, messageEncoder);

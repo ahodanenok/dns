@@ -1,15 +1,16 @@
 package ahodanenok.dns.core.server.transport;
 
-import java.io.ByteArrayInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.net.PortUnreachableException;
+import java.nio.ByteBuffer;
 
-import ahodanenok.dns.core.model.message.MessageDecoder;
-import ahodanenok.dns.core.model.message.MessageEncoder;
 import ahodanenok.dns.core.model.message.MessageHeader;
 import ahodanenok.dns.core.model.message.MessageSections;
+import ahodanenok.dns.core.model.message.format.MessageDecoder;
+import ahodanenok.dns.core.model.message.format.MessageDecoderState;
+import ahodanenok.dns.core.model.message.format.MessageEncoder;
 import ahodanenok.dns.core.server.request.Response;
 import ahodanenok.dns.core.server.request.Request;
 import ahodanenok.dns.core.server.request.RequestProcessor;
@@ -19,7 +20,7 @@ public final class UDPTransportHandler implements TransportHandler {
     public static final int DATA_LENGTH_BYTES_MAX = 512;
 
     private final RequestProcessor requestProcessor;
-    private final MessageDecoder messageDecoder;
+    private final MessageDecoder<?> messageDecoder;
     private final MessageEncoder messageEncoder;
 
     public UDPTransportHandler(RequestProcessor requestProcessor, MessageDecoder messageDecoder, MessageEncoder messageEncoder) {
@@ -32,7 +33,7 @@ public final class UDPTransportHandler implements TransportHandler {
         try {
             DatagramSocket socket = new DatagramSocket(10053);
             socket.setSoTimeout(0);
-        
+
             while (true) {
                 try {
                     DatagramPacket packet = new DatagramPacket(new byte[DATA_LENGTH_BYTES_MAX], DATA_LENGTH_BYTES_MAX);
@@ -57,19 +58,17 @@ public final class UDPTransportHandler implements TransportHandler {
     private class UDPRequest implements Request {
 
         private final DatagramPacket packet;
-        private final ByteArrayInputStream data;
         private MessageHeader header;
         private MessageSections sections;
-        
+
         UDPRequest(DatagramPacket packet) {
             this.packet = packet;
-            this.data = new ByteArrayInputStream(packet.getData(), packet.getOffset(), packet.getLength());
         }
 
         @Override
         public MessageHeader getHeader() {
             if (header == null) {
-                header = messageDecoder.decodeHeader(data);
+                readMessage();
             }
 
             return header;
@@ -78,16 +77,23 @@ public final class UDPTransportHandler implements TransportHandler {
         @Override
         public MessageSections getSections() {
             if (sections == null) {
-                getHeader();
-                sections = messageDecoder.decodeSections(data);
+                readMessage();
             }
 
             return sections;
         }
 
+        private void readMessage() {
+            MessageDecoderState state = messageDecoder.decode(
+                ByteBuffer.wrap(packet.getData(), packet.getOffset(), packet.getLength()),
+                true);
+            this.header = state.getHeader();
+            this.sections = state.getSections();
+        }
+
         @Override
         public void complete(Response response) {
-            
+
         }
     }
 }
