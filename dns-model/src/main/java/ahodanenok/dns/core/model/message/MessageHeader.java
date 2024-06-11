@@ -6,7 +6,7 @@ public interface MessageHeader {
 
     OperationCode getOperation();
 
-    ResponseCode getResponse();
+    ResponseStatus getResponseStatus();
 
     boolean isQuery();
 

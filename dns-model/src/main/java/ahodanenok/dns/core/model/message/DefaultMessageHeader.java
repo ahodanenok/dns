@@ -4,7 +4,7 @@ public final class DefaultMessageHeader implements MessageHeader {
 
     private final int id;
     private OperationCode operation;
-    private ResponseCode response;
+    private ResponseStatus responseStatus;
     private boolean query;
     private boolean truncated;
     private boolean authoritative;
@@ -34,12 +34,12 @@ public final class DefaultMessageHeader implements MessageHeader {
     }
 
     @Override
-    public ResponseCode getResponse() {
-        return response;
+    public ResponseStatus getResponseStatus() {
+        return responseStatus;
     }
 
-    public void setResponse(ResponseCode response) {
-        this.response = response;
+    public void setResponseStatus(ResponseStatus responseStatus) {
+        this.responseStatus = responseStatus;
     }
 
     @Override
