@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import ahodanenok.dns.core.masterfile.record.AResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.CNameResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.HInfoResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.MXResourceRecordParser;
@@ -28,5 +29,6 @@ public class DefaultMasterFileParserConfiguration extends MasterFileParserConfig
         addRecordParser(new NSResourceRecordParser());
         addRecordParser(new PTRResourceRecordParser());
         addRecordParser(new SOAResourceRecordParser());
+        addRecordParser(new AResourceRecordParser());
     }
 }

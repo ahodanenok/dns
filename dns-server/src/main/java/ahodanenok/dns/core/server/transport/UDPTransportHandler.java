@@ -31,7 +31,7 @@ public final class UDPTransportHandler implements TransportHandler {
 
     public void activate() {
         try {
-            DatagramSocket socket = new DatagramSocket(10053);
+            DatagramSocket socket = new DatagramSocket(53);
             socket.setSoTimeout(0);
 
             while (true) {

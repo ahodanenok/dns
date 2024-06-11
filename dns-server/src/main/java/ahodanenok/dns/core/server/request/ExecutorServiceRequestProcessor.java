@@ -14,6 +14,8 @@ public final class ExecutorServiceRequestProcessor implements RequestProcessor {
 
     @Override
     public void processRequest(Request request) {
-
+        executorService.execute(() -> {
+            request.getHeader();
+        });
     }
 }

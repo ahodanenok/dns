@@ -4,4 +4,25 @@ public interface MessageHeader {
 
     int getId();
 
+    OperationCode getOperation();
+
+    ResponseCode getResponse();
+
+    boolean isQuery();
+
+    boolean isAuthoritative();
+
+    boolean isTruncated();
+
+    boolean isRecursionDesired();
+
+    boolean isRecursionAvailable();
+
+    int getQuestionCount();
+
+    int getAnswerCount();
+
+    int getAuthorityCount();
+
+    int getAdditionalCount();
 }

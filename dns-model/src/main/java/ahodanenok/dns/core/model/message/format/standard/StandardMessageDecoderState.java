@@ -6,9 +6,15 @@ import ahodanenok.dns.core.model.message.format.MessageDecoderState;
 
 public final class StandardMessageDecoderState implements MessageDecoderState {
 
+    private MessageHeader header;
+
     @Override
     public MessageHeader getHeader() {
         return null;
+    }
+
+    public void setHeader(MessageHeader header) {
+        this.header = header;
     }
 
     @Override
