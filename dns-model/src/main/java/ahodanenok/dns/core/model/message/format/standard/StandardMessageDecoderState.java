@@ -10,7 +10,7 @@ public final class StandardMessageDecoderState implements MessageDecoderState {
 
     @Override
     public MessageHeader getHeader() {
-        return null;
+        return header;
     }
 
     public void setHeader(MessageHeader header) {
