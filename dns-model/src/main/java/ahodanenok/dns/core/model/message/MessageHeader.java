@@ -4,7 +4,7 @@ public interface MessageHeader {
 
     int getId();
 
-    OperationCode getOperation();
+    Operation getOperation();
 
     ResponseStatus getResponseStatus();
 

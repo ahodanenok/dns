@@ -3,7 +3,7 @@ package ahodanenok.dns.core.model.message;
 public final class DefaultMessageHeader implements MessageHeader {
 
     private final int id;
-    private OperationCode operation;
+    private Operation operation;
     private ResponseStatus responseStatus;
     private boolean query;
     private boolean truncated;
@@ -25,11 +25,11 @@ public final class DefaultMessageHeader implements MessageHeader {
     }
 
     @Override
-    public OperationCode getOperation() {
+    public Operation getOperation() {
         return operation;
     }
 
-    public void setOperation(OperationCode operation) {
+    public void setOperation(Operation operation) {
         this.operation = operation;
     }
 
