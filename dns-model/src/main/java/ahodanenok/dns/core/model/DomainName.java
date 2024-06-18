@@ -16,17 +16,28 @@ public final class DomainName {
             throw new IllegalArgumentException("At least one label is required");
         }
 
-        for (int i = 0; i < labels.length; i++) {
+        return of(labels, 0, labels.length);
+    }
+
+    public static DomainName of(String[] labels, int offset, int length) {
+        if (labels == null || length == 0) {
+            throw new IllegalArgumentException("At least one label is required");
+        }
+        if (offset < 0) {
+            throw new ArrayIndexOutOfBoundsException(offset);
+        }
+
+        for (int i = offset, end = Math.min(offset + length, labels.length); i < end; i++) {
             String label = labels[i];
             if (label == null) {
                 throw new IllegalArgumentException("A label can't be null");
             }
-            if (label.equals(ROOT_LABEL) && i != labels.length - 1) {
+            if (label.equals(ROOT_LABEL) && i != (end - 1)) {
                 throw new IllegalArgumentException("The root label can be present only at the end of a name");
             }
         }
 
-        return new DomainName(labels);
+        return new DomainName(Arrays.copyOfRange(labels, offset, offset + length));
     }
 
     public static DomainName parse(String name) {
@@ -82,7 +93,7 @@ public final class DomainName {
     public String toString() {
         String name;
         if (labels.length == 1) {
-            name = labels[0];
+            name = isAbsolute() ? LABEL_SEPARATOR : labels[0];
         } else if (labels.length == 2) {
             name = labels[0] + LABEL_SEPARATOR + labels[1];
         } else if (labels.length == 3) {

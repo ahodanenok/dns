@@ -16,6 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DomainNameTest {
 
     @Test
+    public void testCreateRoot_1() {
+        DomainName name = DomainName.of("");
+        assertEquals(".", name.toString());
+        assertTrue(name.isAbsolute());
+    }
+
+    @Test
     public void testCreateAbsoluteFromLabels_1() {
         DomainName name = DomainName.of("HOLIDAYS", "");
         assertEquals("HOLIDAYS.", name.toString());
