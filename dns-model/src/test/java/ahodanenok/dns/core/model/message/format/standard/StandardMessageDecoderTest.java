@@ -6,8 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import ahodanenok.dns.core.model.DomainName;
+import ahodanenok.dns.core.model.StandardRecordClass;
+import ahodanenok.dns.core.model.StandardRecordType;
 import ahodanenok.dns.core.model.message.Operation;
 import ahodanenok.dns.core.model.message.ResponseStatus;
+import ahodanenok.dns.core.model.message.QRecordClass;
+import ahodanenok.dns.core.model.message.QRecordType;
 import ahodanenok.dns.core.model.message.format.MessageDecoderState;
 import ahodanenok.dns.core.model.message.format.MessageFormatException;
 
@@ -257,6 +262,101 @@ public class StandardMessageDecoderTest {
         MessageFormatException e = assertThrows(
             MessageFormatException.class, () -> decoder.decode(buf, true));
         assertEquals("Unknown RCODE: 6", e.getMessage());
+    }
+
+    @Test
+    public void testDecode_QuestionUnknownQType_CompleteMessage() {
+        ByteBuffer buf = ByteBuffer.wrap(new byte[] {
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x0, 0x0, 0x1, 0x0, 0x1 // . A IN
+        });
+
+        StandardMessageDecoder decoder = new StandardMessageDecoder();
+        decoder.addQRecordType(StandardRecordType.MX);
+        decoder.addQRecordClass(StandardRecordClass.IN);
+
+        MessageFormatException e = assertThrows(
+            MessageFormatException.class, () -> decoder.decode(buf, true));
+        assertEquals("Unknown QTYPE: 1", e.getMessage());
+    }
+
+    @Test
+    public void testDecode_QuestionUnknownQClass_CompleteMessage() {
+        ByteBuffer buf = ByteBuffer.wrap(new byte[] {
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x0, 0x0, 0x1, 0x0, 0x2 // . A CS
+        });
+
+        StandardMessageDecoder decoder = new StandardMessageDecoder();
+        decoder.addQRecordType(StandardRecordType.A);
+        decoder.addQRecordClass(StandardRecordClass.IN);
+
+        MessageFormatException e = assertThrows(
+            MessageFormatException.class, () -> decoder.decode(buf, true));
+        assertEquals("Unknown QCLASS: 2", e.getMessage());
+    }
+
+    @Test
+    public void testDecode_SingleQuestion_CompleteMessage() {
+        ByteBuffer buf = ByteBuffer.wrap(new byte[] {
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x3, 0x61, 0x62, 0x63, 0x0, 0x0, 0x1, 0x0, 0x3 // abc. A CH
+        });
+
+        StandardMessageDecoder decoder = new StandardMessageDecoder();
+        decoder.addQRecordType(StandardRecordType.A);
+        decoder.addQRecordClass(StandardRecordClass.CH);
+
+        MessageDecoderState state = decoder.decode(buf, true);
+        assertNotNull(state.getSections());
+        assertEquals(1, state.getSections().getQuestion().size());
+        assertEquals(DomainName.of("abc", ""), state.getSections().getQuestion().get(0).getQName());
+        assertEquals(StandardRecordType.A.getName(), state.getSections().getQuestion().get(0).getQType().getName());
+        assertEquals(StandardRecordClass.CH.getName(), state.getSections().getQuestion().get(0).getQClass().getName());
+    }
+
+    @Test
+    public void testDecode_MultipleQuestions_CompleteMessage() {
+        ByteBuffer buf = ByteBuffer.wrap(new byte[] {
+            0x0, 0x1,
+            0x0, 0x0,
+            0x0, 0x2,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x0, 0x0,
+            0x2, 0x67, 0x77, 0x4, 0x74, 0x65, 0x73, 0x74, 0x0, 0x0, 0x2, 0x0, 0x1, // gw.test. NS IN
+            0x5, 0x61, 0x64, 0x6D, 0x69, 0x6E, 0x0, 0x0, 0xF, 0x0, 0x1 // admin. MX IN
+        });
+
+        StandardMessageDecoder decoder = new StandardMessageDecoder();
+        decoder.addQRecordType(StandardRecordType.NS);
+        decoder.addQRecordType(StandardRecordType.MX);
+        decoder.addQRecordClass(StandardRecordClass.IN);
+
+        MessageDecoderState state = decoder.decode(buf, true);
+        assertNotNull(state.getSections());
+        assertEquals(2, state.getSections().getQuestion().size());
+        assertEquals(DomainName.of("gw", "test", ""), state.getSections().getQuestion().get(0).getQName());
+        assertEquals(StandardRecordType.NS.getName(), state.getSections().getQuestion().get(0).getQType().getName());
+        assertEquals(StandardRecordClass.IN.getName(), state.getSections().getQuestion().get(0).getQClass().getName());
+        assertEquals(DomainName.of("admin", ""), state.getSections().getQuestion().get(1).getQName());
+        assertEquals(StandardRecordType.MX.getName(), state.getSections().getQuestion().get(1).getQType().getName());
+        assertEquals(StandardRecordClass.IN.getName(), state.getSections().getQuestion().get(1).getQClass().getName());
     }
 
     private ByteBuffer msg16(int... words) {

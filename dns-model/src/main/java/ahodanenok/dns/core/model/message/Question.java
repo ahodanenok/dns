@@ -5,10 +5,10 @@ import ahodanenok.dns.core.model.DomainName;
 public final class Question {
 
     private final DomainName qname;
-    private final String qtype;
-    private final String qclass;
+    private final QRecordType qtype;
+    private final QRecordClass qclass;
 
-    public Question(DomainName qname, String qtype, String qclass) {
+    public Question(DomainName qname, QRecordType qtype, QRecordClass qclass) {
         this.qname = qname;
         this.qtype = qtype;
         this.qclass = qclass;
@@ -18,11 +18,11 @@ public final class Question {
         return qname;
     }
 
-    public String getQType() {
+    public QRecordType getQType() {
         return qtype;
     }
 
-    public String getQClass() {
+    public QRecordClass getQClass() {
         return qclass;
     }
 }

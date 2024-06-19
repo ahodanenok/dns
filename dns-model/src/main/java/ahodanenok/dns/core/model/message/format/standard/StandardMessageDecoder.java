@@ -1,11 +1,18 @@
 package ahodanenok.dns.core.model.message.format.standard;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
+import ahodanenok.dns.core.model.DomainName;
 import ahodanenok.dns.core.model.message.DefaultMessageHeader;
+import ahodanenok.dns.core.model.message.DefaultMessageSections;
 import ahodanenok.dns.core.model.message.Operation;
+import ahodanenok.dns.core.model.message.Question;
+import ahodanenok.dns.core.model.message.QRecordClass;
+import ahodanenok.dns.core.model.message.QRecordType;
 import ahodanenok.dns.core.model.message.ResponseStatus;
 import ahodanenok.dns.core.model.message.format.MessageDecoder;
 import ahodanenok.dns.core.model.message.format.MessageFormatException;
@@ -15,10 +22,22 @@ public final class StandardMessageDecoder implements MessageDecoder<StandardMess
     private static final int BYTE_MASK = 0xFF;
 
     private final Map<String, StandardResourceRecordDecoder> recordDecoders = new HashMap<>();
+    private final List<QRecordType> recordTypes = new ArrayList<>();
+    private final List<QRecordClass> recordClasses = new ArrayList<>();
 
     public void addRecordDecoder(StandardResourceRecordDecoder recordDecoder) {
         // todo: already registered?
         recordDecoders.put(recordDecoder.getRecordType(), recordDecoder);
+    }
+
+    public void addQRecordType(QRecordType recordType) {
+        // todo: already registered?
+        recordTypes.add(recordType);
+    }
+
+    public void addQRecordClass(QRecordClass recordClass) {
+        // todo: already registered?
+        recordClasses.add(recordClass);
     }
 
     // todo: implement incremental decoding
@@ -65,7 +84,48 @@ public final class StandardMessageDecoder implements MessageDecoder<StandardMess
 
         state.setHeader(header);
 
+        // max question size 255+16+16=287bytes
+
+        List<Question> question;
+        int questionCount = state.getHeader().getQuestionCount();
+        if (questionCount > 0) {
+            question = new ArrayList<>(questionCount);
+            for (int i = 0; i < questionCount; i++) {
+                question.add(new Question(
+                    state.domainNameDecoder.decode(buf),
+                    decodeQRecordType(buf),
+                    decodeQRecordClass(buf)));
+            }
+        } else {
+            question = List.of();
+        }
+
+        state.setSections(new DefaultMessageSections(question, List.of(), List.of(), List.of()));
+        state.setReady(true);
+
         return state;
+    }
+
+    private QRecordType decodeQRecordType(ByteBuffer buf) {
+        int recordTypeCode = ((buf.get() & BYTE_MASK) << 8) | (buf.get() & BYTE_MASK);
+        for (QRecordType recordType : recordTypes) {
+            if (recordType.getCode() == recordTypeCode) {
+                return recordType;
+            }
+        }
+
+        throw new MessageFormatException("Unknown QTYPE: " + recordTypeCode);
+    }
+
+    private QRecordClass decodeQRecordClass(ByteBuffer buf) {
+        int recordClassCode = ((buf.get() & BYTE_MASK) << 8) | (buf.get() & BYTE_MASK);
+        for (QRecordClass recordClass : recordClasses) {
+            if (recordClass.getCode() == recordClassCode) {
+                return recordClass;
+            }
+        }
+
+        throw new MessageFormatException("Unknown QCLASS: " + recordClassCode);
     }
 
     @Override

@@ -5,6 +5,8 @@ import ahodanenok.dns.core.model.message.MessageSections;
 
 public interface MessageDecoderState {
 
+    boolean isReady();
+
     MessageHeader getHeader();
 
     MessageSections getSections();
