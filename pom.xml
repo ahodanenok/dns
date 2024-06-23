@@ -13,8 +13,8 @@
   </properties>
 
   <modules>
+    <module>dns-commons</module>
     <module>dns-masterfile</module>
-    <module>dns-model</module>
     <module>dns-server</module>
     <module>dns-service</module>
     <module>dns-storage</module>

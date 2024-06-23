@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>ahodanenok.dns</groupId>
-            <artifactId>dns-model</artifactId>
+            <artifactId>dns-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
 

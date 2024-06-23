@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>ahodanenok.dns</groupId>
-    <artifactId>dns-model</artifactId>
+    <artifactId>dns-commons</artifactId>
 
     <dependencies>
         <dependency>
