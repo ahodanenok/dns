@@ -520,4 +520,120 @@ public class StandardMessageEncoderTest {
         assertEquals((byte) 0x0, buf.get());
         assertEquals((byte) 0x0, buf.get());
     }
+
+    @Test
+    public void testEncodeHeader_QDCOUNT() {
+        DefaultMessageHeader header = new DefaultMessageHeader(0x0);
+        header.setQuery(true);
+        header.setOperation(Operation.QUERY);
+        header.setAuthoritative(false);
+        header.setTruncated(false);
+        header.setRecursionDesired(false);
+        header.setRecursionAvailable(false);
+        header.setResponseStatus(ResponseStatus.OK);
+        header.setQuestionCount(1322);
+
+        StandardMessageEncoder encoder = new StandardMessageEncoder();
+        ByteBuffer buf = encoder.encode(new DefaultMessage(header, new DefaultMessageSections()));
+        buf.flip();
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x5, buf.get());
+        assertEquals((byte) 0x2A, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+    }
+
+    @Test
+    public void testEncodeHeader_ANCOUNT() {
+        DefaultMessageHeader header = new DefaultMessageHeader(0x0);
+        header.setQuery(true);
+        header.setOperation(Operation.QUERY);
+        header.setAuthoritative(false);
+        header.setTruncated(false);
+        header.setRecursionDesired(false);
+        header.setRecursionAvailable(false);
+        header.setResponseStatus(ResponseStatus.OK);
+        header.setAnswerCount(43331);
+
+        StandardMessageEncoder encoder = new StandardMessageEncoder();
+        ByteBuffer buf = encoder.encode(new DefaultMessage(header, new DefaultMessageSections()));
+        buf.flip();
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0xA9, buf.get());
+        assertEquals((byte) 0x43, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+    }
+
+    @Test
+    public void testEncodeHeader_NSCOUNT() {
+        DefaultMessageHeader header = new DefaultMessageHeader(0x0);
+        header.setQuery(true);
+        header.setOperation(Operation.QUERY);
+        header.setAuthoritative(false);
+        header.setTruncated(false);
+        header.setRecursionDesired(false);
+        header.setRecursionAvailable(false);
+        header.setResponseStatus(ResponseStatus.OK);
+        header.setAuthorityCount(8721);
+
+        StandardMessageEncoder encoder = new StandardMessageEncoder();
+        ByteBuffer buf = encoder.encode(new DefaultMessage(header, new DefaultMessageSections()));
+        buf.flip();
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x22, buf.get());
+        assertEquals((byte) 0x11, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+    }
+
+    @Test
+    public void testEncodeHeader_ARCOUNT() {
+        DefaultMessageHeader header = new DefaultMessageHeader(0x0);
+        header.setQuery(true);
+        header.setOperation(Operation.QUERY);
+        header.setAuthoritative(false);
+        header.setTruncated(false);
+        header.setRecursionDesired(false);
+        header.setRecursionAvailable(false);
+        header.setResponseStatus(ResponseStatus.OK);
+        header.setAdditionalCount(15555);
+
+        StandardMessageEncoder encoder = new StandardMessageEncoder();
+        ByteBuffer buf = encoder.encode(new DefaultMessage(header, new DefaultMessageSections()));
+        buf.flip();
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x0, buf.get());
+        assertEquals((byte) 0x3C, buf.get());
+        assertEquals((byte) 0xC3, buf.get());
+    }
 }
