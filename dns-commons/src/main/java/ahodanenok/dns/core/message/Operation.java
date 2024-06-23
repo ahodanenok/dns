@@ -12,6 +12,10 @@ public enum Operation {
         this.code = code;
     }
 
+    public int getCode() {
+        return code;
+    }
+
     public static Operation fromCode(int code) {
         for (Operation operation : values()) {
             if (operation.code == code) {

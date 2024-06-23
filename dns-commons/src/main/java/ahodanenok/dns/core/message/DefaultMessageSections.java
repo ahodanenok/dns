@@ -11,6 +11,10 @@ public final class DefaultMessageSections implements MessageSections {
     private final List<ResourceRecord> authority;
     private final List<ResourceRecord> additional;
 
+    public DefaultMessageSections() {
+        this(List.of(), List.of(), List.of(), List.of());
+    }
+
     public DefaultMessageSections(List<Question> question, List<ResourceRecord> answer, List<ResourceRecord> authority, List<ResourceRecord> additional) {
         this.question = question;
         this.answer = answer;
