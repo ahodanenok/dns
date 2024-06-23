@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import ahodanenok.dns.core.masterfile.record.ResourceRecordParser;
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 public class MasterFileParserConfiguration {
 

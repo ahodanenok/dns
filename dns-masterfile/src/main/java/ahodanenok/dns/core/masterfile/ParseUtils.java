@@ -2,7 +2,7 @@ package ahodanenok.dns.core.masterfile;
 
 import java.io.IOException;
 
-import ahodanenok.dns.core.model.DomainName;
+import ahodanenok.dns.core.DomainName;
 
 public final class ParseUtils {
 

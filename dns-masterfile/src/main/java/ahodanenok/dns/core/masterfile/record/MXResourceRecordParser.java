@@ -2,7 +2,7 @@ package ahodanenok.dns.core.masterfile.record;
 
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
 import ahodanenok.dns.core.masterfile.ParseUtils;
-import ahodanenok.dns.core.model.MXResourceRecord;
+import ahodanenok.dns.core.record.MXResourceRecord;
 
 public final class MXResourceRecordParser implements ResourceRecordParser<MXResourceRecord> {
 

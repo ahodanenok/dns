@@ -3,17 +3,15 @@ package ahodanenok.dns.core.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import ahodanenok.dns.core.model.CNameResourceRecord;
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.ResourceRecord;
-import ahodanenok.dns.core.model.NSResourceRecord;
-import ahodanenok.dns.core.model.query.Query;
-import ahodanenok.dns.core.model.query.QueryResponse;
-import ahodanenok.dns.core.model.query.Question;
+import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.CNameResourceRecord;
+import ahodanenok.dns.core.record.NSResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.service.query.Query;
+import ahodanenok.dns.core.service.query.QueryResponse;
+import ahodanenok.dns.core.service.query.Question;
 import ahodanenok.dns.core.storage.NameStorage;
 import ahodanenok.dns.core.storage.Node;
-
-import ahodanenok.dns.core.model.ResourceRecord;
 
 public final class LocalNameService implements NameService {
 

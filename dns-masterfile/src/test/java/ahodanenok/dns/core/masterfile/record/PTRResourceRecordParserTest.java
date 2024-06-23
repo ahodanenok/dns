@@ -7,9 +7,9 @@ import ahodanenok.dns.core.masterfile.FileUtils;
 import ahodanenok.dns.core.masterfile.MasterFileParser;
 import ahodanenok.dns.core.masterfile.MasterFileParserConfiguration;
 import ahodanenok.dns.core.masterfile.ResourceRecordParseIterator;
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.PTRResourceRecord;
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.PTRResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 

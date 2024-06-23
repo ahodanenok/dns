@@ -1,6 +1,6 @@
 package ahodanenok.dns.core.masterfile;
 
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
 import ahodanenok.dns.core.zone.ZoneSupplier;
 
 public final class MasterFileZoneSupplier extends ZoneSupplier {

@@ -1,7 +1,7 @@
 package ahodanenok.dns.core.masterfile.record;
 
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 public interface ResourceRecordParser<T extends ResourceRecord> {
 

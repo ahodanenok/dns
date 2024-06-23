@@ -2,7 +2,7 @@ package ahodanenok.dns.core.masterfile.record;
 
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
 import ahodanenok.dns.core.masterfile.ParseUtils;
-import ahodanenok.dns.core.model.HInfoResourceRecord;
+import ahodanenok.dns.core.record.HInfoResourceRecord;
 
 public final class HInfoResourceRecordParser implements ResourceRecordParser<HInfoResourceRecord> {
 

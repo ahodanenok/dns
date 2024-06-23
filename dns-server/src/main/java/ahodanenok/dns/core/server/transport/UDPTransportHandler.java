@@ -6,11 +6,11 @@ import java.net.SocketTimeoutException;
 import java.net.PortUnreachableException;
 import java.nio.ByteBuffer;
 
-import ahodanenok.dns.core.model.message.MessageHeader;
-import ahodanenok.dns.core.model.message.MessageSections;
-import ahodanenok.dns.core.model.message.format.MessageDecoder;
-import ahodanenok.dns.core.model.message.format.MessageDecoderState;
-import ahodanenok.dns.core.model.message.format.MessageEncoder;
+import ahodanenok.dns.core.message.MessageHeader;
+import ahodanenok.dns.core.message.MessageSections;
+import ahodanenok.dns.core.message.format.MessageDecoder;
+import ahodanenok.dns.core.message.format.MessageDecoderState;
+import ahodanenok.dns.core.message.format.MessageEncoder;
 import ahodanenok.dns.core.server.request.Response;
 import ahodanenok.dns.core.server.request.Request;
 import ahodanenok.dns.core.server.request.RequestProcessor;

@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ahodanenok.dns.core.model.AResourceRecord;
-import ahodanenok.dns.core.model.CNameResourceRecord;
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.HInfoResourceRecord;
-import ahodanenok.dns.core.model.MXResourceRecord;
-import ahodanenok.dns.core.model.NSResourceRecord;
-import ahodanenok.dns.core.model.query.Query;
-import ahodanenok.dns.core.model.query.QueryResponse;
-import ahodanenok.dns.core.model.query.Question;
+import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.AResourceRecord;
+import ahodanenok.dns.core.record.CNameResourceRecord;
+import ahodanenok.dns.core.record.HInfoResourceRecord;
+import ahodanenok.dns.core.record.MXResourceRecord;
+import ahodanenok.dns.core.record.NSResourceRecord;
+import ahodanenok.dns.core.service.query.Query;
+import ahodanenok.dns.core.service.query.QueryResponse;
+import ahodanenok.dns.core.service.query.Question;
 import ahodanenok.dns.core.storage.NameStorage;
 import ahodanenok.dns.core.storage.Node;
 

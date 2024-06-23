@@ -12,7 +12,7 @@ import ahodanenok.dns.core.masterfile.record.MXResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.NSResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.PTRResourceRecordParser;
 import ahodanenok.dns.core.masterfile.record.SOAResourceRecordParser;
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 public class DefaultMasterFileParserConfiguration extends MasterFileParserConfiguration{
 

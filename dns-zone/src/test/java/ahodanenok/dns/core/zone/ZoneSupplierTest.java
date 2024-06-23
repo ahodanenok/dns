@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.NSResourceRecord;
-import ahodanenok.dns.core.model.ResourceRecord;
-import ahodanenok.dns.core.model.SOAResourceRecord;
-import ahodanenok.dns.core.model.Zone;
+import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.NSResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.SOAResourceRecord;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;

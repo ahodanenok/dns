@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import ahodanenok.dns.core.model.AResourceRecord;
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.MXResourceRecord;
-import ahodanenok.dns.core.model.NSResourceRecord;
-import ahodanenok.dns.core.model.ResourceRecord;
-import ahodanenok.dns.core.model.SOAResourceRecord;
-import ahodanenok.dns.core.model.Zone;
+import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.AResourceRecord;
+import ahodanenok.dns.core.record.MXResourceRecord;
+import ahodanenok.dns.core.record.NSResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.SOAResourceRecord;
+import ahodanenok.dns.core.zone.Zone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

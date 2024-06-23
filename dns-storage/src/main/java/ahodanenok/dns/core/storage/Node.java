@@ -2,8 +2,8 @@ package ahodanenok.dns.core.storage;
 
 import java.util.List;
 
-import ahodanenok.dns.core.model.DomainName;
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 public final class Node {
 

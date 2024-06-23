@@ -2,7 +2,7 @@ package ahodanenok.dns.core.zone;
 
 import java.util.List;
 
-import ahodanenok.dns.core.model.ResourceRecord;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 public interface ZoneValidator {
 
