@@ -1,27 +1,9 @@
 package ahodanenok.dns.core.record;
 
-public enum StandardRecordClass implements RecordClass {
+public interface StandardRecordClass {
 
-    IN("IN", 1),
-    CS("CS", 2),
-    CH("CH", 3),
-    HS("HS", 4);
-
-    private final String name;
-    private final int code;
-
-    StandardRecordClass(String name, int code) {
-        this.name = name;
-        this.code = code;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getCode() {
-        return code;
-    }
+    public static final RecordClass IN = new RecordClass("IN", 1);
+    public static final RecordClass CS = new RecordClass("CS", 2);
+    public static final RecordClass CH = new RecordClass("CH", 3);
+    public static final RecordClass HS = new RecordClass("HS", 4);
 }

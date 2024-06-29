@@ -10,6 +10,8 @@ import ahodanenok.dns.core.masterfile.ResourceRecordParseIterator;
 import ahodanenok.dns.core.DomainName;
 import ahodanenok.dns.core.record.MXResourceRecord;
 import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.StandardRecordClass;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,15 +22,15 @@ public class MXResourceRecordParserTest {
     public void test_001() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new MXResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/mx-001.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(7201, record.getTtl());
         assertEquals(DomainName.parse("test-001.email."), record.getName());
 
@@ -45,7 +47,7 @@ public class MXResourceRecordParserTest {
     public void test_002() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new MXResourceRecordParser());
-        config.addRecordClass("CS");
+        config.addRecordClass(StandardRecordClass.CS);
         config.setDefaultTtl(56789);
 
         MasterFileParser parser = new MasterFileParser(config);
@@ -53,8 +55,8 @@ public class MXResourceRecordParserTest {
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(56789, record.getTtl());
         assertEquals(DomainName.parse("test-002.email."), record.getName());
 
@@ -72,15 +74,15 @@ public class MXResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new MXResourceRecordParser());
         config.setDefaultTtl(300);
-        config.setDefaultRClass("CH");
+        config.setDefaultRClass(StandardRecordClass.CH);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/mx-003.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("CH", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.CH, record.getRClass());
         assertEquals(300, record.getTtl());
         assertEquals(DomainName.parse("test-003.email."), record.getName());
 
@@ -97,15 +99,15 @@ public class MXResourceRecordParserTest {
     public void test_004() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new MXResourceRecordParser());
-        config.setDefaultRClass("HS");
+        config.setDefaultRClass(StandardRecordClass.HS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/mx-004.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(222, record.getTtl());
         assertEquals(DomainName.parse("test-004.email."), record.getName());
 
@@ -122,15 +124,15 @@ public class MXResourceRecordParserTest {
     public void test_005() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new MXResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/mx-005.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(300000, record.getTtl());
         assertEquals(DomainName.parse("test-005.email."), record.getName());
 
@@ -148,11 +150,11 @@ public class MXResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new MXResourceRecordParser());
         config.setDefaultTtl(3600);
-        config.setDefaultRClass("IN");
-        config.addRecordClass("IN");
-        config.addRecordClass("CH");
-        config.addRecordClass("CS");
-        config.addRecordClass("HS");
+        config.setDefaultRClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.CH);
+        config.addRecordClass(StandardRecordClass.CS);
+        config.addRecordClass(StandardRecordClass.HS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/mx-006.txt"));
@@ -162,8 +164,8 @@ public class MXResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("CH", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.CH, record.getRClass());
         assertEquals(3600, record.getTtl());
         assertEquals(DomainName.parse("test-006-1.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
@@ -172,8 +174,8 @@ public class MXResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(532124, record.getTtl());
         assertEquals(DomainName.parse("test-006-2.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
@@ -182,8 +184,8 @@ public class MXResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(532124, record.getTtl());
         assertEquals(DomainName.parse("test-006-3.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
@@ -192,8 +194,8 @@ public class MXResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(720, record.getTtl());
         assertEquals(DomainName.parse("test-006-4.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);
@@ -202,8 +204,8 @@ public class MXResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("MX", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.MX, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(720, record.getTtl());
         assertEquals(DomainName.parse("test-006-5.email."), record.getName());
         mxRecord = assertInstanceOf(MXResourceRecord.class, record);

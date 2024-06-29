@@ -7,8 +7,8 @@ public final class CNameResourceRecord extends AbstractResourceRecord {
     private DomainName canonicalName;
 
     @Override
-    public String getType() {
-        return "CNAME";
+    public RecordType getType() {
+        return StandardRecordType.CNAME;
     }
 
     public DomainName getCanonicalName() {

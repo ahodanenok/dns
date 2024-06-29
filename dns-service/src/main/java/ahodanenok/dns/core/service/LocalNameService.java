@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.message.Question;
 import ahodanenok.dns.core.record.CNameResourceRecord;
 import ahodanenok.dns.core.record.NSResourceRecord;
 import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.StandardRecordType;
 import ahodanenok.dns.core.service.query.Query;
 import ahodanenok.dns.core.service.query.QueryResponse;
-import ahodanenok.dns.core.service.query.Question;
 import ahodanenok.dns.core.storage.NameStorage;
 import ahodanenok.dns.core.storage.Node;
 
@@ -38,11 +39,11 @@ public final class LocalNameService implements NameService {
             if (qname.equals(node.getName())) {
                 // todo: authoritative
                 CNameResourceRecord cnameRecord = node.getRecords().stream()
-                    .filter(r -> r.getType().equals("CNAME"))
+                    .filter(r -> r.getType().equals(StandardRecordType.CNAME))
                     .findFirst()
                     .map(CNameResourceRecord.class::cast)
                     .orElse(null);
-                if (cnameRecord != null && !question.getQType().equals("CNAME")) {
+                if (cnameRecord != null && !question.getQType().equals(StandardRecordType.CNAME)) {
                     answer.add(cnameRecord);
                     qname = cnameRecord.getCanonicalName();
                 } else {
@@ -55,7 +56,7 @@ public final class LocalNameService implements NameService {
                 }
             } else {
                 for (ResourceRecord record : node.getRecords()) {
-                    if (record.getType().equals("NS")) {
+                    if (record.getType().equals(StandardRecordType.NS)) {
                         authority.add((NSResourceRecord) record);
                     }
                 }
@@ -71,7 +72,7 @@ public final class LocalNameService implements NameService {
                         }
 
                         for (ResourceRecord glueRecord : glueNode.getRecords()) {
-                            if (glueRecord.getType().equals("A")) {
+                            if (glueRecord.getType().equals(StandardRecordType.A)) {
                                 additional.add(glueRecord);
                             }
                         }

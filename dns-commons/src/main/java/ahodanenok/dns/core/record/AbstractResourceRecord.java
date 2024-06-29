@@ -5,7 +5,7 @@ import ahodanenok.dns.core.DomainName;
 public abstract class AbstractResourceRecord implements ResourceRecord {
 
     private DomainName name;
-    private String rclass;
+    private RecordClass rclass;
     private int ttl;
 
     @Override
@@ -19,12 +19,12 @@ public abstract class AbstractResourceRecord implements ResourceRecord {
     }
 
     @Override
-    public String getRClass() {
+    public RecordClass getRClass() {
         return rclass;
     }
 
     @Override
-    public void setRClass(String rclass) {
+    public void setRClass(RecordClass rclass) {
         this.rclass = rclass;
     }
 

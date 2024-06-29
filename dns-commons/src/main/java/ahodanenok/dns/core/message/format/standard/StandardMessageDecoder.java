@@ -163,7 +163,7 @@ public final class StandardMessageDecoder implements MessageDecoder<StandardMess
 
         R record = recordDecoder.createInitialRecord();
         record.setName(name);
-        record.setRClass(recordClass.getName());
+        record.setRClass(recordClass);
         record.setTtl(0);
 
         int dataLength = StandardFormatUtils.decodeUInt16(buf);

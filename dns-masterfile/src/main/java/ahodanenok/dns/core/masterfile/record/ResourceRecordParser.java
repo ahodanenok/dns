@@ -1,11 +1,12 @@
 package ahodanenok.dns.core.masterfile.record;
 
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
+import ahodanenok.dns.core.record.RecordType;
 import ahodanenok.dns.core.record.ResourceRecord;
 
 public interface ResourceRecordParser<T extends ResourceRecord> {
 
-    String getRecordType();
+    RecordType getRecordType();
 
     T createInitialRecord();
 

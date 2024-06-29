@@ -8,8 +8,8 @@ public final class MXResourceRecord extends AbstractResourceRecord {
     private DomainName exchange;
 
     @Override
-    public String getType() {
-        return "MX";
+    public RecordType getType() {
+        return StandardRecordType.MX;
     }
 
     public int getPreference() {

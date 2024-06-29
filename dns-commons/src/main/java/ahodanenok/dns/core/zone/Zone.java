@@ -4,7 +4,9 @@ import java.util.Collections;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.RecordClass;
 import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.StandardRecordType;
 import ahodanenok.dns.core.record.SOAResourceRecord;
 
 public final class Zone {
@@ -14,7 +16,7 @@ public final class Zone {
 
     public Zone(List<ResourceRecord> records) {
         this.soaRecord = records.stream()
-            .filter(r -> "SOA".equals(r.getType()))
+            .filter(r -> StandardRecordType.SOA.equals(r.getType()))
             .findFirst()
             .map(r -> (SOAResourceRecord) r)
             .orElseThrow(() -> new IllegalArgumentException("No SOA record found"));
@@ -25,7 +27,7 @@ public final class Zone {
         return soaRecord.getName();
     }
 
-    public String getRClass() {
+    public RecordClass getRClass() {
         return soaRecord.getRClass();
     }
 

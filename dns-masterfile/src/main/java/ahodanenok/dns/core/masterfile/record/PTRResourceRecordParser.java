@@ -3,11 +3,13 @@ package ahodanenok.dns.core.masterfile.record;
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
 import ahodanenok.dns.core.masterfile.ParseUtils;
 import ahodanenok.dns.core.record.PTRResourceRecord;
+import ahodanenok.dns.core.record.RecordType;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 public final class PTRResourceRecordParser implements ResourceRecordParser<PTRResourceRecord> {
 
-    public String getRecordType() {
-        return "PTR";
+    public RecordType getRecordType() {
+        return StandardRecordType.PTR;
     }
 
     public PTRResourceRecord createInitialRecord() {

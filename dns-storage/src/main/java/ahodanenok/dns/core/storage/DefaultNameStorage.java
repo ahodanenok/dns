@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.message.QRecordClass;
+import ahodanenok.dns.core.message.StandardQRecordClass;
 import ahodanenok.dns.core.record.ResourceRecord;
 import ahodanenok.dns.core.zone.Zone;
 
@@ -31,12 +33,12 @@ public final class DefaultNameStorage implements NameStorage {
     }
 
     @Override
-    public List<Zone> exportZones(DomainName name, String rclass) {
+    public List<Zone> exportZones(DomainName name, QRecordClass rclass) {
         return getZones(name, rclass);
     }
 
     @Override
-    public Node getRoot(DomainName name, String rclass) {
+    public Node getRoot(DomainName name, QRecordClass rclass) {
         List<Zone> zones = getZones(name, rclass);
         if (zones.isEmpty()) {
             return null;
@@ -59,7 +61,7 @@ public final class DefaultNameStorage implements NameStorage {
     }
 
     @Override
-    public Node findNodeExact(DomainName name, String rclass) {
+    public Node findNodeExact(DomainName name, QRecordClass rclass) {
         List<Zone> zones = getZones(name, rclass);
         if (zones.isEmpty()) {
             return null;
@@ -82,7 +84,7 @@ public final class DefaultNameStorage implements NameStorage {
     }
 
     @Override
-    public Node findNearestNode(DomainName name, String rclass) {
+    public Node findNearestNode(DomainName name, QRecordClass rclass) {
         Node node = findNodeExact(name, rclass);
         if (node != null) {
             return node;
@@ -111,11 +113,11 @@ public final class DefaultNameStorage implements NameStorage {
         return null;
     }
 
-    private List<Zone> getZones(DomainName name, String rclass) {
+    private List<Zone> getZones(DomainName name, QRecordClass rclass) {
         List<Zone> result = new ArrayList<>();
         for (Zone zone : zones) {
             if (zone.getName().equals(name)
-                    && (rclass.equals("*") || zone.getRClass().equals(rclass))) {
+                    && (rclass.equals(StandardQRecordClass.ANY) || zone.getRClass().equals(rclass))) {
                 result.add(zone);
             }
         }
@@ -127,7 +129,7 @@ public final class DefaultNameStorage implements NameStorage {
         for (DomainName ancestor : name.ancestors()) {
             for (Zone zone : zones) {
                 if (zone.getName().equals(ancestor)
-                        && (rclass.equals("*") || zone.getRClass().equals(rclass))) {
+                        && (rclass.equals(StandardQRecordClass.ANY) || zone.getRClass().equals(rclass))) {
                     result.add(zone);
                 }
             }

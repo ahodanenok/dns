@@ -6,8 +6,8 @@ public final class AResourceRecord extends AbstractResourceRecord {
     private String address;
 
     @Override
-    public String getType() {
-        return "A";
+    public RecordType getType() {
+        return StandardRecordType.A;
     }
 
     public String getAddress() {

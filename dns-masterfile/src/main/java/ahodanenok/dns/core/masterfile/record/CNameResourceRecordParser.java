@@ -3,11 +3,13 @@ package ahodanenok.dns.core.masterfile.record;
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
 import ahodanenok.dns.core.masterfile.ParseUtils;
 import ahodanenok.dns.core.record.CNameResourceRecord;
+import ahodanenok.dns.core.record.RecordType;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 public final class CNameResourceRecordParser implements ResourceRecordParser<CNameResourceRecord> {
 
-    public String getRecordType() {
-        return "CNAME";
+    public RecordType getRecordType() {
+        return StandardRecordType.CNAME;
     }
 
     public CNameResourceRecord createInitialRecord() {

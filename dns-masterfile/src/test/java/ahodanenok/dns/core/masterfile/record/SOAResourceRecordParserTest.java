@@ -10,6 +10,8 @@ import ahodanenok.dns.core.masterfile.ResourceRecordParseIterator;
 import ahodanenok.dns.core.DomainName;
 import ahodanenok.dns.core.record.SOAResourceRecord;
 import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.StandardRecordClass;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,15 +22,15 @@ public class SOAResourceRecordParserTest {
     public void test_001() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new SOAResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/soa-001.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(72000, record.getTtl());
         assertEquals(DomainName.parse("soa.test-001."), record.getName());
 
@@ -50,7 +52,7 @@ public class SOAResourceRecordParserTest {
     public void test_002() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new SOAResourceRecordParser());
-        config.addRecordClass("HS");
+        config.addRecordClass(StandardRecordClass.HS);
         config.setDefaultTtl(36000);
 
         MasterFileParser parser = new MasterFileParser(config);
@@ -58,8 +60,8 @@ public class SOAResourceRecordParserTest {
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(36000, record.getTtl());
         assertEquals(DomainName.parse("soa.test-002."), record.getName());
 
@@ -82,15 +84,15 @@ public class SOAResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new SOAResourceRecordParser());
         config.setDefaultTtl(1299);
-        config.setDefaultRClass("CS");
+        config.setDefaultRClass(StandardRecordClass.CS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/soa-003.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(1299, record.getTtl());
         assertEquals(DomainName.parse("soa.test-003."), record.getName());
 
@@ -112,15 +114,15 @@ public class SOAResourceRecordParserTest {
     public void test_004() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new SOAResourceRecordParser());
-        config.setDefaultRClass("IN");
+        config.setDefaultRClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/soa-004.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(100, record.getTtl());
         assertEquals(DomainName.parse("soa.test-004."), record.getName());
 
@@ -142,15 +144,15 @@ public class SOAResourceRecordParserTest {
     public void test_005() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new SOAResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/soa-005.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(6543210, record.getTtl());
         assertEquals(DomainName.parse("soa.test-005."), record.getName());
 
@@ -173,11 +175,11 @@ public class SOAResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new SOAResourceRecordParser());
         config.setDefaultTtl(86400);
-        config.setDefaultRClass("IN");
-        config.addRecordClass("IN");
-        config.addRecordClass("CH");
-        config.addRecordClass("CS");
-        config.addRecordClass("HS");
+        config.setDefaultRClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.CH);
+        config.addRecordClass(StandardRecordClass.CS);
+        config.addRecordClass(StandardRecordClass.HS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/soa-006.txt"));
@@ -187,8 +189,8 @@ public class SOAResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(25232125, record.getTtl());
         assertEquals(DomainName.parse("a.soa.test-006."), record.getName());
         soaRecord = assertInstanceOf(SOAResourceRecord.class, record);
@@ -202,8 +204,8 @@ public class SOAResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(25232125, record.getTtl());
         assertEquals(DomainName.parse("b.soa.test-006."), record.getName());
         soaRecord = assertInstanceOf(SOAResourceRecord.class, record);
@@ -217,8 +219,8 @@ public class SOAResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(51234, record.getTtl());
         assertEquals(DomainName.parse("c.soa.test-006."), record.getName());
         soaRecord = assertInstanceOf(SOAResourceRecord.class, record);
@@ -232,8 +234,8 @@ public class SOAResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(51234, record.getTtl());
         assertEquals(DomainName.parse("d.soa.test-006."), record.getName());
         soaRecord = assertInstanceOf(SOAResourceRecord.class, record);
@@ -247,8 +249,8 @@ public class SOAResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("SOA", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.SOA, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(111, record.getTtl());
         assertEquals(DomainName.parse("e.soa.test-006."), record.getName());
         soaRecord = assertInstanceOf(SOAResourceRecord.class, record);

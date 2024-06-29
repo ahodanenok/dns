@@ -6,16 +6,18 @@ import java.util.Map;
 import java.util.Set;
 
 import ahodanenok.dns.core.masterfile.record.ResourceRecordParser;
+import ahodanenok.dns.core.record.RecordClass;
+import ahodanenok.dns.core.record.RecordType;
 import ahodanenok.dns.core.record.ResourceRecord;
 
 public class MasterFileParserConfiguration {
 
     int defaultTtl;
-    String defaultRClass;
-    final Set<String> recordClasses = new LinkedHashSet<>();
-    final Map<String, ResourceRecordParser<? extends ResourceRecord>> recordParsers = new HashMap<>();
+    RecordClass defaultRClass;
+    final Set<RecordClass> recordClasses = new LinkedHashSet<>();
+    final Map<RecordType, ResourceRecordParser<? extends ResourceRecord>> recordParsers = new HashMap<>();
 
-    public final void setDefaultRClass(String rclass) {
+    public final void setDefaultRClass(RecordClass rclass) {
         this.defaultRClass = rclass;
     }
 
@@ -23,7 +25,7 @@ public class MasterFileParserConfiguration {
         this.defaultTtl = ttl;
     }
 
-    public final void addRecordClass(String rclass) {
+    public final void addRecordClass(RecordClass rclass) {
         this.recordClasses.add(rclass);
     }
 

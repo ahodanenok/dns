@@ -7,8 +7,8 @@ public final class PTRResourceRecord extends AbstractResourceRecord {
     private DomainName targetName;
 
     @Override
-    public String getType() {
-        return "PTR";
+    public RecordType getType() {
+        return StandardRecordType.PTR;
     }
 
     public DomainName getTargetName() {

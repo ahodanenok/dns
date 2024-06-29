@@ -3,11 +3,13 @@ package ahodanenok.dns.core.masterfile.record;
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
 import ahodanenok.dns.core.masterfile.ParseUtils;
 import ahodanenok.dns.core.record.MXResourceRecord;
+import ahodanenok.dns.core.record.RecordType;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 public final class MXResourceRecordParser implements ResourceRecordParser<MXResourceRecord> {
 
-    public String getRecordType() {
-        return "MX";
+    public RecordType getRecordType() {
+        return StandardRecordType.MX;
     }
 
     public MXResourceRecord createInitialRecord() {

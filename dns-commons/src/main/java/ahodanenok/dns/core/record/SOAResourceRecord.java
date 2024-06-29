@@ -13,8 +13,8 @@ public final class SOAResourceRecord extends AbstractResourceRecord {
     private long minTtl;
 
     @Override
-    public String getType() {
-        return "SOA";
+    public RecordType getType() {
+        return StandardRecordType.SOA;
     }
 
     public DomainName getMasterName() {

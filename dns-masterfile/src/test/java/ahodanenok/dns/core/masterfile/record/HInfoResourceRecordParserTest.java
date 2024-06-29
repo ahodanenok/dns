@@ -10,6 +10,8 @@ import ahodanenok.dns.core.masterfile.ResourceRecordParseIterator;
 import ahodanenok.dns.core.DomainName;
 import ahodanenok.dns.core.record.HInfoResourceRecord;
 import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.StandardRecordClass;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,15 +22,15 @@ public class HInfoResourceRecordParserTest {
     public void test_001() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new HInfoResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/hinfo-001.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(4800, record.getTtl());
         assertEquals(DomainName.parse("test-001.hinfo."), record.getName());
 
@@ -45,7 +47,7 @@ public class HInfoResourceRecordParserTest {
     public void test_002() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new HInfoResourceRecordParser());
-        config.addRecordClass("CS");
+        config.addRecordClass(StandardRecordClass.CS);
         config.setDefaultTtl(3200);
 
         MasterFileParser parser = new MasterFileParser(config);
@@ -53,8 +55,8 @@ public class HInfoResourceRecordParserTest {
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(3200, record.getTtl());
         assertEquals(DomainName.parse("test-002.hinfo."), record.getName());
 
@@ -72,15 +74,15 @@ public class HInfoResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new HInfoResourceRecordParser());
         config.setDefaultTtl(53000);
-        config.setDefaultRClass("CH");
+        config.setDefaultRClass(StandardRecordClass.CH);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/hinfo-003.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("CH", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.CH, record.getRClass());
         assertEquals(53000, record.getTtl());
         assertEquals(DomainName.parse("test-003.hinfo."), record.getName());
 
@@ -97,15 +99,15 @@ public class HInfoResourceRecordParserTest {
     public void test_004() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new HInfoResourceRecordParser());
-        config.setDefaultRClass("CS");
+        config.setDefaultRClass(StandardRecordClass.CS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/hinfo-004.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(3411267, record.getTtl());
         assertEquals(DomainName.parse("test-004.hinfo."), record.getName());
 
@@ -122,15 +124,15 @@ public class HInfoResourceRecordParserTest {
     public void test_005() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new HInfoResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/hinfo-005.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(9, record.getTtl());
         assertEquals(DomainName.parse("test-005.hinfo."), record.getName());
 
@@ -148,11 +150,11 @@ public class HInfoResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new HInfoResourceRecordParser());
         config.setDefaultTtl(86400);
-        config.setDefaultRClass("IN");
-        config.addRecordClass("IN");
-        config.addRecordClass("CH");
-        config.addRecordClass("CS");
-        config.addRecordClass("HS");
+        config.setDefaultRClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.CH);
+        config.addRecordClass(StandardRecordClass.CS);
+        config.addRecordClass(StandardRecordClass.HS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/hinfo-006.txt"));
@@ -162,8 +164,8 @@ public class HInfoResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(86400, record.getTtl());
         assertEquals(DomainName.parse("test-006-1.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
@@ -172,8 +174,8 @@ public class HInfoResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(86400, record.getTtl());
         assertEquals(DomainName.parse("test-006-2.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
@@ -182,8 +184,8 @@ public class HInfoResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(3452, record.getTtl());
         assertEquals(DomainName.parse("test-006-3.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
@@ -192,8 +194,8 @@ public class HInfoResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(111111, record.getTtl());
         assertEquals(DomainName.parse("test-006-4.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);
@@ -202,8 +204,8 @@ public class HInfoResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("HINFO", record.getType());
-        assertEquals("CH", record.getRClass());
+        assertEquals(StandardRecordType.HINFO, record.getType());
+        assertEquals(StandardRecordClass.CH, record.getRClass());
         assertEquals(6534, record.getTtl());
         assertEquals(DomainName.parse("test-006-5.hinfo."), record.getName());
         hinfoRecord = assertInstanceOf(HInfoResourceRecord.class, record);

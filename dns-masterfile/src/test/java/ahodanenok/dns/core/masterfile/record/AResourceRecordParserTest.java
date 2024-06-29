@@ -10,6 +10,8 @@ import ahodanenok.dns.core.masterfile.ResourceRecordParseIterator;
 import ahodanenok.dns.core.DomainName;
 import ahodanenok.dns.core.record.AResourceRecord;
 import ahodanenok.dns.core.record.ResourceRecord;
+import ahodanenok.dns.core.record.StandardRecordClass;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,15 +22,15 @@ public class AResourceRecordParserTest {
     public void test_001() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new AResourceRecordParser());
-        config.addRecordClass("IN");
+        config.addRecordClass(StandardRecordClass.IN);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/a-001.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(54321, record.getTtl());
         assertEquals(DomainName.parse("test-001.address."), record.getName());
 
@@ -44,7 +46,7 @@ public class AResourceRecordParserTest {
     public void test_002() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new AResourceRecordParser());
-        config.addRecordClass("HS");
+        config.addRecordClass(StandardRecordClass.HS);
         config.setDefaultTtl(321);
 
         MasterFileParser parser = new MasterFileParser(config);
@@ -52,8 +54,8 @@ public class AResourceRecordParserTest {
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(321, record.getTtl());
         assertEquals(DomainName.parse("test-002.address."), record.getName());
 
@@ -70,15 +72,15 @@ public class AResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new AResourceRecordParser());
         config.setDefaultTtl(3600);
-        config.setDefaultRClass("CH");
+        config.setDefaultRClass(StandardRecordClass.CH);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/a-003.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("CH", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.CH, record.getRClass());
         assertEquals(3600, record.getTtl());
         assertEquals(DomainName.parse("test-003.address."), record.getName());
 
@@ -94,15 +96,15 @@ public class AResourceRecordParserTest {
     public void test_004() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new AResourceRecordParser());
-        config.setDefaultRClass("CS");
+        config.setDefaultRClass(StandardRecordClass.CS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/a-004.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(48400, record.getTtl());
         assertEquals(DomainName.parse("test-004.address."), record.getName());
 
@@ -118,16 +120,16 @@ public class AResourceRecordParserTest {
     public void test_005() throws Exception {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new AResourceRecordParser());
-        config.addRecordClass("IN");
-        config.addRecordClass("CH");
+        config.addRecordClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.CH);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/a-005.txt"));
         assertTrue(records.hasNext());
 
         ResourceRecord record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("IN", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.IN, record.getRClass());
         assertEquals(12, record.getTtl());
         assertEquals(DomainName.parse("test-005.address."), record.getName());
 
@@ -144,11 +146,11 @@ public class AResourceRecordParserTest {
         MasterFileParserConfiguration config = new MasterFileParserConfiguration();
         config.addRecordParser(new AResourceRecordParser());
         config.setDefaultTtl(333444);
-        config.setDefaultRClass("IN");
-        config.addRecordClass("IN");
-        config.addRecordClass("CH");
-        config.addRecordClass("CS");
-        config.addRecordClass("HS");
+        config.setDefaultRClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.IN);
+        config.addRecordClass(StandardRecordClass.CH);
+        config.addRecordClass(StandardRecordClass.CS);
+        config.addRecordClass(StandardRecordClass.HS);
 
         MasterFileParser parser = new MasterFileParser(config);
         ResourceRecordParseIterator records = parser.parse(FileUtils.getTestFilePath("record/a-006.txt"));
@@ -158,8 +160,8 @@ public class AResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(5231, record.getTtl());
         assertEquals(DomainName.parse("test-006-1.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
@@ -167,8 +169,8 @@ public class AResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("CS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.CS, record.getRClass());
         assertEquals(720000, record.getTtl());
         assertEquals(DomainName.parse("test-006-2.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
@@ -176,8 +178,8 @@ public class AResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(720000, record.getTtl());
         assertEquals(DomainName.parse("test-006-3.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
@@ -185,8 +187,8 @@ public class AResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(3246, record.getTtl());
         assertEquals(DomainName.parse("test-006-4.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);
@@ -194,8 +196,8 @@ public class AResourceRecordParserTest {
 
         assertTrue(records.hasNext());
         record = records.next();
-        assertEquals("A", record.getType());
-        assertEquals("HS", record.getRClass());
+        assertEquals(StandardRecordType.A, record.getType());
+        assertEquals(StandardRecordClass.HS, record.getRClass());
         assertEquals(3246, record.getTtl());
         assertEquals(DomainName.parse("test-006-5.address."), record.getName());
         aRecord = assertInstanceOf(AResourceRecord.class, record);

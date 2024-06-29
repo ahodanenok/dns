@@ -7,8 +7,8 @@ public final class NSResourceRecord extends AbstractResourceRecord {
     private DomainName nsName;
 
     @Override
-    public String getType() {
-        return "NS";
+    public RecordType getType() {
+        return StandardRecordType.NS;
     }
 
     public DomainName getNSName() {

@@ -2,12 +2,14 @@ package ahodanenok.dns.core.masterfile.record;
 
 import ahodanenok.dns.core.masterfile.MasterFileDataReader;
 import ahodanenok.dns.core.masterfile.ParseUtils;
+import ahodanenok.dns.core.record.RecordType;
+import ahodanenok.dns.core.record.StandardRecordType;
 import ahodanenok.dns.core.record.SOAResourceRecord;
 
 public final class SOAResourceRecordParser implements ResourceRecordParser<SOAResourceRecord> {
 
-    public String getRecordType() {
-        return "SOA";
+    public RecordType getRecordType() {
+        return StandardRecordType.SOA;
     }
 
     public SOAResourceRecord createInitialRecord() {

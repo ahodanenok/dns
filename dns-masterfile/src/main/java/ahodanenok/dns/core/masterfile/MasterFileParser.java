@@ -12,6 +12,8 @@ import java.util.Set;
 
 import ahodanenok.dns.core.masterfile.record.ResourceRecordParser;
 import ahodanenok.dns.core.DomainName;
+import ahodanenok.dns.core.record.RecordClass;
+import ahodanenok.dns.core.record.RecordType;
 import ahodanenok.dns.core.record.ResourceRecord;
 
 public final class MasterFileParser {
@@ -19,9 +21,9 @@ public final class MasterFileParser {
     private final FileSystem fs;
 
     private final int defaultTtl;
-    private final String defaultRClass;
-    private final Map<String, ResourceRecordParser<? extends ResourceRecord>> recordParsers;
-    private final Set<String> recordClasses;
+    private final RecordClass defaultRClass;
+    private final Map<RecordType, ResourceRecordParser<? extends ResourceRecord>> recordParsers;
+    private final Set<RecordClass> recordClasses;
 
     public MasterFileParser(MasterFileParserConfiguration config) {
         this.fs = FileSystems.getDefault();
@@ -79,8 +81,8 @@ public final class MasterFileParser {
 
         DomainName name;
         int ttl = -1;
-        String rclass = null;
-        String type = null;
+        RecordClass rclass = null;
+        RecordType type = null;
         String str;
 
         str = reader.readString();
@@ -96,37 +98,39 @@ public final class MasterFileParser {
         if (CharacterUtils.isDigit(str.charAt(0))) {
             ttl = ParseUtils.parseInt(str);
             str = reader.readString();
-            if (recordClasses.contains(str)) {
-                rclass = str;
+            rclass = resolveRecordClass(str);
+            if (rclass != null) {
                 str = reader.readString();
-                if (!recordParsers.containsKey(str)) {
+                type = resolveRecordType(str);
+                if (type == null) {
                     throw new MasterFileParseException("todo");
                 }
-                type = str;
-            } else if (recordParsers.containsKey(str)) {
-                type = str;
             } else {
-                throw new MasterFileParseException("todo");
+                type = resolveRecordType(str);
+                if (type == null) {
+                    throw new MasterFileParseException("todo");
+                }
             }
-        } else if (recordClasses.contains(str)) {
-            rclass = str;
+        } else if ((rclass = resolveRecordClass(str)) != null) {
             str = reader.readString();
             if (CharacterUtils.isDigit(str.charAt(0))) {
                 ttl = ParseUtils.parseInt(str);
                 str = reader.readString();
-                if (!recordParsers.containsKey(str)) {
+                type = resolveRecordType(str);
+                if (type == null) {
                     throw new MasterFileParseException("todo");
                 }
-                type = str;
-            } else if (recordParsers.containsKey(str)) {
-                type = str;
             } else {
+                type = resolveRecordType(str);
+                if (type == null) {
+                    throw new MasterFileParseException("todo");
+                }
+            }
+        } else {
+            type = resolveRecordType(str);
+            if (type == null) {
                 throw new MasterFileParseException("todo");
             }
-        } else if (recordParsers.containsKey(str)) {
-            type = str;
-        } else {
-            throw new MasterFileParseException("todo");
         }
 
         if (ttl == -1) {
@@ -161,9 +165,29 @@ public final class MasterFileParser {
         return record;
     }
 
+    private RecordType resolveRecordType(String str) {
+        for (RecordType recordType : recordParsers.keySet()) {
+            if (recordType.getName().equals(str)) {
+                return recordType;
+            }
+        }
+
+        return null;
+    }
+
+    private RecordClass resolveRecordClass(String str) {
+        for (RecordClass recordClass : recordClasses) {
+            if (recordClass.getName().equals(str)) {
+                return recordClass;
+            }
+        }
+
+        return null;
+    }
+
     private static class ParseContext {
 
         int defaultTtl;
-        String defaultRClass;
+        RecordClass defaultRClass;
     }
 }

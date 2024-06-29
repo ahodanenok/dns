@@ -6,8 +6,8 @@ public final class HInfoResourceRecord extends AbstractResourceRecord {
     private String os;
 
     @Override
-    public String getType() {
-        return "HINFO";
+    public RecordType getType() {
+        return StandardRecordType.HINFO;
     }
 
     public String getCPU() {

@@ -8,11 +8,11 @@ public interface ResourceRecord {
 
     void setName(DomainName name);
 
-    String getType();
+    RecordType getType();
 
-    String getRClass();
+    RecordClass getRClass();
 
-    void setRClass(String rclass);
+    void setRClass(RecordClass rclass);
 
     int getTtl();
 

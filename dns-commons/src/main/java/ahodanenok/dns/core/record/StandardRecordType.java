@@ -1,39 +1,21 @@
 package ahodanenok.dns.core.record;
 
-public enum StandardRecordType implements RecordType {
+public class StandardRecordType {
 
-    A("A", 1),
-    NS("NS", 2),
-    MD("MD", 3),
-    MF("MF", 4),
-    CNAME("CNAME", 5),
-    SOA("SOA", 6),
-    MB("SOA", 7),
-    MG("MG", 8),
-    MR("MR", 9),
-    NULL("NULL", 10),
-    WKS("WKS", 11),
-    PTR("PTR", 12),
-    HINFO("HINFO", 13),
-    MINFO("MINFO", 14),
-    MX("MX", 15),
-    TXT("TXT", 16);
-
-    private final String name;
-    private final int code;
-
-    StandardRecordType(String name, int code) {
-        this.name = name;
-        this.code = code;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getCode() {
-        return code;
-    }
+    public static final RecordType A = new RecordType("A", 1);
+    public static final RecordType NS = new RecordType("NS", 2);
+    public static final RecordType MD = new RecordType("MD", 3);
+    public static final RecordType MF = new RecordType("MF", 4);
+    public static final RecordType CNAME = new RecordType("CNAME", 5);
+    public static final RecordType SOA = new RecordType("SOA", 6);
+    public static final RecordType MB = new RecordType("SOA", 7);
+    public static final RecordType MG = new RecordType("MG", 8);
+    public static final RecordType MR = new RecordType("MR", 9);
+    public static final RecordType NULL = new RecordType("NULL", 10);
+    public static final RecordType WKS = new RecordType("WKS", 11);
+    public static final RecordType PTR = new RecordType("PTR", 12);
+    public static final RecordType HINFO = new RecordType("HINFO", 13);
+    public static final RecordType MINFO = new RecordType("MINFO", 14);
+    public static final RecordType MX = new RecordType("MX", 15);
+    public static final RecordType TXT = new RecordType("TXT", 16);
 }

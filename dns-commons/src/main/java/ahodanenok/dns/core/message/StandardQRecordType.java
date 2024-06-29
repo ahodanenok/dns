@@ -1,27 +1,9 @@
 package ahodanenok.dns.core.message;
 
-public enum StandardQRecordType implements QRecordType {
+public class StandardQRecordType {
 
-    AXFR("AXFR", 252),
-    MAILB("MAILB", 253),
-    MAILA("MAILA", 254),
-    ANY("*", 255);
-
-    private final String name;
-    private final int code;
-
-    StandardQRecordType(String name, int code) {
-        this.name = name;
-        this.code = code;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getCode() {
-        return code;
-    }
+    public static final QRecordType AXFR = new QRecordType("AXFR", 252);
+    public static final QRecordType MAILB = new QRecordType("MAILB", 253);
+    public static final QRecordType MAILA = new QRecordType("MAILA", 254);
+    public static final QRecordType ANY = new QRecordType("*", 255);
 }
