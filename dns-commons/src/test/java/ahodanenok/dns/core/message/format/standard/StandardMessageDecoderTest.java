@@ -7,14 +7,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.record.StandardRecordClass;
-import ahodanenok.dns.core.record.StandardRecordType;
 import ahodanenok.dns.core.message.Operation;
 import ahodanenok.dns.core.message.ResponseStatus;
-import ahodanenok.dns.core.message.QRecordClass;
-import ahodanenok.dns.core.message.QRecordType;
 import ahodanenok.dns.core.message.format.MessageDecoderState;
 import ahodanenok.dns.core.message.format.MessageFormatException;
+import ahodanenok.dns.core.question.QRecordClass;
+import ahodanenok.dns.core.question.QRecordType;
+import ahodanenok.dns.core.record.StandardRecordClass;
+import ahodanenok.dns.core.record.StandardRecordType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.message.Question;
+import ahodanenok.dns.core.question.Question;
 import ahodanenok.dns.core.record.AResourceRecord;
 import ahodanenok.dns.core.record.CNameResourceRecord;
 import ahodanenok.dns.core.record.HInfoResourceRecord;

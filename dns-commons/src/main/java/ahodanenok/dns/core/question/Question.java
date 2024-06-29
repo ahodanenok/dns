@@ -1,4 +1,4 @@
-package ahodanenok.dns.core.message;
+package ahodanenok.dns.core.question;
 
 import ahodanenok.dns.core.DomainName;
 

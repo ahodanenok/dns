@@ -1,6 +1,6 @@
 package ahodanenok.dns.core.record;
 
-import ahodanenok.dns.core.message.QRecordType;
+import ahodanenok.dns.core.question.QRecordType;
 
 public class RecordType extends QRecordType {
 

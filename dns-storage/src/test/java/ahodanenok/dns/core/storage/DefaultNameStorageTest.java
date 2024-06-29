@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.message.StandardQRecordClass;
+import ahodanenok.dns.core.question.StandardQRecordClass;
 import ahodanenok.dns.core.record.AResourceRecord;
 import ahodanenok.dns.core.record.MXResourceRecord;
 import ahodanenok.dns.core.record.NSResourceRecord;

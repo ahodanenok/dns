@@ -1,4 +1,4 @@
-package ahodanenok.dns.core.message;
+package ahodanenok.dns.core.question;
 
 public class QRecordClass {
 

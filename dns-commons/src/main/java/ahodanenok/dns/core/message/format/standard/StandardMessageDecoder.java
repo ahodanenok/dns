@@ -7,19 +7,19 @@ import java.util.Map;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.record.RecordClass;
-import ahodanenok.dns.core.record.RecordType;
-import ahodanenok.dns.core.record.ResourceRecord;
 import ahodanenok.dns.core.message.DefaultMessageHeader;
 import ahodanenok.dns.core.message.DefaultMessageSections;
 import ahodanenok.dns.core.message.Operation;
-import ahodanenok.dns.core.message.Question;
-import ahodanenok.dns.core.message.QRecordClass;
-import ahodanenok.dns.core.message.QRecordType;
 import ahodanenok.dns.core.message.ResponseStatus;
 import ahodanenok.dns.core.message.format.MessageDecoder;
 import ahodanenok.dns.core.message.format.MessageFormatException;
 import ahodanenok.dns.core.message.format.ResourceRecordDecoder;
+import ahodanenok.dns.core.question.Question;
+import ahodanenok.dns.core.question.QRecordClass;
+import ahodanenok.dns.core.question.QRecordType;
+import ahodanenok.dns.core.record.RecordClass;
+import ahodanenok.dns.core.record.RecordType;
+import ahodanenok.dns.core.record.ResourceRecord;
 
 public final class StandardMessageDecoder implements MessageDecoder<StandardMessageDecoderState> {
 

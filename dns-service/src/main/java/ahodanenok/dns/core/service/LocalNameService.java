@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.message.Question;
+import ahodanenok.dns.core.question.Question;
 import ahodanenok.dns.core.record.CNameResourceRecord;
 import ahodanenok.dns.core.record.NSResourceRecord;
 import ahodanenok.dns.core.record.ResourceRecord;

@@ -2,12 +2,12 @@ package ahodanenok.dns.core.message.format.standard;
 
 import java.nio.ByteBuffer;
 
+import ahodanenok.dns.core.message.format.ResourceRecordDecoder;
+import ahodanenok.dns.core.message.format.ResourceRecordEncoder;
+import ahodanenok.dns.core.question.QRecordType;
 import ahodanenok.dns.core.record.ResourceRecord;
 import ahodanenok.dns.core.record.CNameResourceRecord;
 import ahodanenok.dns.core.record.StandardRecordType;
-import ahodanenok.dns.core.message.QRecordType;
-import ahodanenok.dns.core.message.format.ResourceRecordDecoder;
-import ahodanenok.dns.core.message.format.ResourceRecordEncoder;
 
 public final class StandardCNameResourceRecordCodec
         implements StandardResourceRecordDecoder<CNameResourceRecord>, ResourceRecordEncoder<CNameResourceRecord> {

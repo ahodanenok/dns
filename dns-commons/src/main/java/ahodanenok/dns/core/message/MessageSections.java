@@ -2,6 +2,7 @@ package ahodanenok.dns.core.message;
 
 import java.util.List;
 
+import ahodanenok.dns.core.question.Question;
 import ahodanenok.dns.core.record.ResourceRecord;
 
 public interface MessageSections {

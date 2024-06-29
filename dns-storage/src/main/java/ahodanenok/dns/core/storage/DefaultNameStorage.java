@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.message.QRecordClass;
-import ahodanenok.dns.core.message.StandardQRecordClass;
+import ahodanenok.dns.core.question.QRecordClass;
+import ahodanenok.dns.core.question.StandardQRecordClass;
 import ahodanenok.dns.core.record.ResourceRecord;
 import ahodanenok.dns.core.zone.Zone;
 

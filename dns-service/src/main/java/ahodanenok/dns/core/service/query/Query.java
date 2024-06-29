@@ -2,7 +2,7 @@ package ahodanenok.dns.core.service.query;
 
 import java.util.List;
 
-import ahodanenok.dns.core.message.Question;
+import ahodanenok.dns.core.question.Question;
 
 public final class Query {
 

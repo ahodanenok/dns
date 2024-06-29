@@ -3,7 +3,7 @@ package ahodanenok.dns.core.storage;
 import java.util.List;
 
 import ahodanenok.dns.core.DomainName;
-import ahodanenok.dns.core.message.QRecordClass;
+import ahodanenok.dns.core.question.QRecordClass;
 import ahodanenok.dns.core.zone.Zone;
 
 public interface NameStorage {
