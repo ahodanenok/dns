@@ -2,6 +2,7 @@ package ahodanenok.dns.core;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -63,6 +64,27 @@ public final class DomainName {
 
     public boolean isAbsolute() {
         return labels[labels.length - 1].equals(ROOT_LABEL);
+    }
+
+    public Iterable<String> labels() {
+        return () -> new Iterator<>() {
+
+            int pos = 0;
+
+            @Override
+            public boolean hasNext() {
+                return pos < labels.length;
+            }
+
+            @Override
+            public String next() {
+                if (pos >= labels.length) {
+                    throw new NoSuchElementException("No more labels");
+                }
+
+                return labels[pos++];
+            }
+        };
     }
 
     public Iterable<DomainName> ancestors() {
